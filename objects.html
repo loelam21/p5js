@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <script src="p5/p5.min.js"></script>
+    <style>
+      h2 {
+        display: inline;
+      }
+    </style>
+  </head>
+  <body>
+    <span><h2>x position: </h2><h2 id="xpos"></h2></span>
+    <br>
+    <span><h2>y position: </h2><h2 id="ypos"></h2></span>
+    
+    <script>
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      
+      var ball = new ball(); //create global object
+      
+      function setup() {
+        createCanvas(w,h);
+      }
+      
+      function draw() {
+        background(255);
+        
+        ball.show(); //to show the object
+        ball.move(); //call ball.move()
+      }
+      
+      //use "this" to refer to objects
+      function ball() { //this is an object
+        //create this object at 100,100
+        this.x = 100;
+        this.y = 100;
+        
+        this.show = function() { //this is to show the object
+          fill(color('red'));
+          ellipse(this.x,this.y,50,50);
+        }
+        
+        this.move = function() { //this allows the object to move
+          if (keyIsDown(65) && (this.x > 50)) { //a key
+            this.x -= 10;
+          }
+          if (keyIsDown(68) && (this.x < w - 50)) { //d key
+            this.x += 10;
+          }
+          if (keyIsDown(87) && (this.y > 50)) { //w key
+            this.y -= 10;
+          }
+          if (keyIsDown(83) && (this.y < h - 50)) { //s key
+            this.y += 10;
+          }
+          document.getElementById('xpos').innerHTML = this.x; //show x positon of ball
+          document.getElementById('ypos').innerHTML = this.y; //show y position of ball
+        }
+        
+      }
+    </script>
+  </body>
+</html>
