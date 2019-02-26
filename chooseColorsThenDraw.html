@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <script src="p5/p5.min.js"></script>
+    <style>
+      body {
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+      }
+      #sample {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 150px;
+        height: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Enter value (0-255). Press Enter when done.</h1>
+    <div id="sample"></div>
+    <span>Enter a value for Red:</span> <!--spans the width of the page-->
+    <input type="number" id="red">
+    <span>Enter a value for Blue:</span>
+    <input type="number" id="blue">
+    <span>Enter a value for Green:</span>
+    <input type="number" id="green">
+    
+    <script>
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      var weight = 3;
+      var red = 0;
+      var green = 0;
+      var blue = 0;
+      
+      function setup() {
+        createCanvas(w,h);
+      }
+      
+      function draw() {
+        if (mouseIsPressed) {
+          strokeWeight(weight);
+          line(pmouseX,pmouseY,mouseX,mouseY);
+        }
+      }
+      
+      function keyPressed() {
+        if (keyCode == "38") {
+          weight += 1;
+        }
+        if (keyCode == "40") {
+          weight += -1;
+        }
+        if (keyCode == "13") {
+          var red = document.getElementById('red').value;
+          var green = document.getElementById('green').value;
+          var blue = document.getElementById('blue').value;
+          stroke(color(red,green,blue));
+          document.getElementById('sample').style.backgroundColor = 'rgb(' + [red,green,blue].join(',') + ')';
+        }
+      }
+    </script>
+  </body>
+</html>
