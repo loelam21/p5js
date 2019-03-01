@@ -53,15 +53,18 @@
       var enemy = new enemy();
       var speedUp = new speedUp();
       
-      var d;
+      //Store distances
+      var d; //distance from ball to enemy
+      var distToSpeed; //distance from ball to food
       
-      var distToSpeed;
+      var ballSpeed = 10;
       
       function setup() {
         createCanvas(w,h);
-        speedUp.x = random(50,w - 50);
-        speedUp.y = random(50,h - 50);
         
+        //makes power up pop up in a random location
+        speedUp.x = random(50,w - 50); //its x
+        speedUp.y = random(50,h - 50); //its y
       }
       
       function draw() {
@@ -74,8 +77,8 @@
         enemy.show(); //shows the object
         enemy.move(); //moves the object
         
-        
         speedUp.show(); //shows the power up
+        speedUp.collect();
       }
         
       function ball() { //this is an object
@@ -90,16 +93,16 @@
         
         this.move = function() { //this allows the object to move
           if (keyIsDown(65) && (this.x > 25)) { //a key
-            this.x -= 10;
+            this.x -= ballSpeed;
           }
           if (keyIsDown(68) && (this.x < w - 25)) { //d key
-            this.x += 10;
+            this.x += ballSpeed;
           }
           if (keyIsDown(87) && (this.y > 25)) { //w key
-            this.y -= 10;
+            this.y -= ballSpeed;
           }
           if (keyIsDown(83) && (this.y < h - 25)) { //s key
-            this.y += 10;
+            this.y += ballSpeed;
           }
           document.getElementById('xpos').innerHTML = this.x; //show x positon of ball
           document.getElementById('ypos').innerHTML = this.y; //show y position of ball
@@ -156,9 +159,11 @@
         
         this.collect = function() {
           distToSpeed = dist(this.x,this.y,ball.x,ball.y);
-          //if (distToSpeed < 50) {
-            
-          //}
+          if (distToSpeed < 50) {
+            ballSpeed += 5;
+            this.x = random(50,w - 50);
+            this.y = random(50,h - 50);
+          }
         }
       }
     </script>
