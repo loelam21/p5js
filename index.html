@@ -1,4 +1,4 @@
-<html>
+<html> <!--this is from tagPlusPowerUps.html-->
   <head>
     <script src="p5/p5.min.js"></script>
     <style>
@@ -8,7 +8,7 @@
         padding: 0;
       }
       #posInfo {
-        height: 50px;
+        height: 80px;
         z-index: -1;
       }
       h2 {
@@ -20,6 +20,10 @@
       }
       #middle {
         float: left;
+      }
+      #displayEvent {
+        color: red;
+        font-weight: bold;
       }
       #right {
         float: right;
@@ -35,6 +39,8 @@
       </div>
       <div id="middle">
         <h2>Distance: </h2><h2 id="dist"></h2>
+        <br>
+        <h2 id="displayEvent"></h2>
       </div>
       <div id="right">
         <h2>x position: </h2><h2 id="xpos2"></h2>
@@ -59,16 +65,21 @@
       
       var ballSpeed = 10;
       
+      /*function preload() {
+        img = loadImage("devil.png");
+      }*/
       function setup() {
         createCanvas(w,h);
         
         //makes power up pop up in a random location
         speedUp.x = random(50,w - 50); //its x
         speedUp.y = random(50,h - 50); //its y
+        
+        //image(img,0,0);
       }
       
       function draw() {
-        background(255);
+        background(0);
         
         ball.show(); //to show the object
         ball.move(); //call ball.move()
@@ -101,7 +112,7 @@
           if (keyIsDown(87) && (this.y > 25)) { //w key
             this.y -= ballSpeed;
           }
-          if (keyIsDown(83) && (this.y < h - 25)) { //s key
+          if (keyIsDown(83) && (this.y < h - 50)) { //s key
             this.y += ballSpeed;
           }
           document.getElementById('xpos').innerHTML = this.x; //show x positon of ball
@@ -140,7 +151,7 @@
           if (keyIsDown(73) && (this.y > 25)) { //i key
             this.y -= 10;
           }
-          if (keyIsDown(75) && (this.y < h - 25)) { //k key
+          if (keyIsDown(75) && (this.y < h - 50)) { //k key
             this.y += 10;
           }
           document.getElementById('xpos2').innerHTML = this.x; //show x positon of ball
@@ -163,6 +174,10 @@
             ballSpeed += 5;
             this.x = random(50,w - 50);
             this.y = random(50,h - 50);
+            document.getElementById('displayEvent').innerHTML = "Speed BOOST!";
+            setTimeout(function() {
+              document.getElementById('displayEvent').innerHTML = "";
+            }, 3000);
           }
         }
       }
