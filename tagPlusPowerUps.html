@@ -31,7 +31,7 @@
     </style>
   </head>
   <body>
-    <div id="posInfo">
+    <!--<div id="posInfo">
       <div id="left">
         <h2>x position: </h2><h2 id="xpos"></h2>
         <br>
@@ -47,7 +47,7 @@
         <br>
         <h2>y position: </h2><h2 id="ypos2"></h2>
       </div>
-    </div>
+    </div>-->
     
     
     <script>
@@ -57,29 +57,34 @@
       //Global objects
       var ball = new ball();
       var enemy = new enemy();
-      var speedUp = new speedUp();
+      var speedUpForPlayer = new speedUpForPlayer();
+      var biggerEnemy = new biggerEnemy();
       
       //Store distances
       var d; //distance from ball to enemy
-      var distToSpeed; //distance from ball to food
+      var distToSpeed; //distance from ball to its food
+      var distToGrow; //distance from enemy to its food
       
-      var ballSpeed = 10;
+      var ballSpeed = 10; //speed of the ball
+      var enemySize = 50; //
       
-      /*function preload() {
-        img = loadImage("devil.png");
-      }*/
+      function preload() {
+        devil = loadImage("devil.png");
+      }
       function setup() {
         createCanvas(w,h);
         
         //makes power up pop up in a random location
-        speedUp.x = random(50,w - 50); //its x
-        speedUp.y = random(50,h - 50); //its y
+        speedUpForPlayer.x = random(50,w - 50); //player's x
+        speedUpForPlayer.y = random(50,h - 50); //player's y
         
-        //image(img,0,0);
+        biggerEnemy.x = random(50,w - 50); //enemy's x
+        biggerEnemy.y = random(50,h - 50); //enemy's y
+        
       }
       
       function draw() {
-        background(0);
+        background(200);
         
         ball.show(); //to show the object
         ball.move(); //call ball.move()
@@ -88,8 +93,11 @@
         enemy.show(); //shows the object
         enemy.move(); //moves the object
         
-        speedUp.show(); //shows the power up
-        speedUp.collect();
+        speedUpForPlayer.show(); //shows the power up
+        speedUpForPlayer.collect(); //activate powers
+        
+        biggerEnemy.show(); //shows the power up
+        biggerEnemy.collect(); //activate powers
       }
         
       function ball() { //this is an object
@@ -112,20 +120,20 @@
           if (keyIsDown(87) && (this.y > 25)) { //w key
             this.y -= ballSpeed;
           }
-          if (keyIsDown(83) && (this.y < h - 50)) { //s key
+          if (keyIsDown(83) && (this.y < h - 25)) { //s key
             this.y += ballSpeed;
           }
-          document.getElementById('xpos').innerHTML = this.x; //show x positon of ball
-          document.getElementById('ypos').innerHTML = this.y; //show y position of ball
+          //document.getElementById('xpos').innerHTML = this.x; //show x positon of ball
+          //document.getElementById('ypos').innerHTML = this.y; //show y position of ball
         }
         
         this.collision = function() { //detects collision
           //calculates distance
           d = dist(this.x,this.y,enemy.x,enemy.y);
-          document.getElementById('dist').innerHTML = d.toFixed(0);
+          //document.getElementById('dist').innerHTML = d.toFixed(0);
           //check for collison
           if (d < 50) { //if distance is less than radius
-            window.alert("You Lose!");
+            window.alert("Red Loses!");
             noloop(); //stops program
           }
         }
@@ -135,10 +143,12 @@
         //create this object at 100,100
         this.x = w - 100;
         this.y = 100;
-        
+
         this.show = function() { //this is to show the object
-          fill(color('blue'));
-          ellipse(this.x,this.y,50,50);
+          /*fill(color('blue'));
+          ellipse(this.x,this.y,enemySize,enemySize);*/
+          imageMode(CENTER); //draws from center instead of top left corner
+          image(devil,this.x,this.y,enemySize * 1.3,enemySize * 1.3); //multiply by 1.2 bc actual image is small
         }
         
         this.move = function() { //this allows the object to move
@@ -154,29 +164,52 @@
           if (keyIsDown(75) && (this.y < h - 50)) { //k key
             this.y += 10;
           }
-          document.getElementById('xpos2').innerHTML = this.x; //show x positon of ball
-          document.getElementById('ypos2').innerHTML = this.y; //show y position of ball
+          //document.getElementById('xpos2').innerHTML = this.x; //show x positon of ball
+          //document.getElementById('ypos2').innerHTML = this.y; //show y position of ball
         }
       }
       
-      function speedUp() {
+      function speedUpForPlayer() {
         this.x;
         this.y;
         
         this.show = function() {
-          fill(color('green'));
-          ellipse(this.x,this.y,25,25);
+          fill(color('red'));
+          rect(this.x,this.y,25,25);
         }
         
         this.collect = function() {
-          distToSpeed = dist(this.x,this.y,ball.x,ball.y);
+          distToSpeed = dist(this.x,this.y,ball.x,ball.y); //calc dist btwn this food and player
           if (distToSpeed < 50) {
-            ballSpeed += 5;
-            this.x = random(50,w - 50);
-            this.y = random(50,h - 50);
-            document.getElementById('displayEvent').innerHTML = "Speed BOOST!";
+            ballSpeed += 8; //increase ball speed
+            this.x = random(50,w - 50); //food appear in new spot
+            this.y = random(50,h - 50); //food appear in new spot
+            //document.getElementById('displayEvent').innerHTML = "Speed BOOST!";
             setTimeout(function() {
-              document.getElementById('displayEvent').innerHTML = "";
+              //document.getElementById('displayEvent').innerHTML = ""; //clears "Speed BOOST" text
+              ballSpeed -= 8; //change back to original speed
+            }, 3000);
+          }
+        }
+      }
+      
+      function biggerEnemy() {
+        this.x;
+        this.y;
+        
+        this.show = function() {
+          fill(color('blue'));
+          rect(this.x,this.y,25,25);
+        }
+        
+        this.collect = function() {
+          distToGrow = dist(this.x,this.y,enemy.x,enemy.y); //calc dist btwn this food and enemy
+          if (distToGrow < 50) {
+            enemySize += 15; //increase ball speed
+            this.x = random(50,w - 50); //food appear in new spot
+            this.y = random(50,h - 50); //food appear in new spot
+            setTimeout(function() {
+              enemySize -= 15; //change back to original speed
             }, 3000);
           }
         }
