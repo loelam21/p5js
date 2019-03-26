@@ -1,219 +1,49 @@
 <html>
   <head>
-    <script src="p5.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Staatliches|Source+Sans+Pro" rel="stylesheet">
     <style>
       body {
-        overflow: hidden;
         margin: 0;
         padding: 0;
+        text-align: center;
+        font-family: 'Source Sans Pro', sans-serif;
+        background-color: black;
+        color: white;
       }
-      #posInfo {
-        height: 80px;
-        z-index: -1;
+      #name {
+        font-size: 5vw;
+        margin-top: 10%;
+        font-family: 'Staatliches', cursive;
       }
-      h2 {
-        display: inline;
-      }
-      #left {
-        width: 42%;
-        float: left;
-      }
-      #middle {
-        float: left;
-      }
-      #displayEvent {
-        color: red;
-        font-weight: bold;
-      }
-      #right {
-        float: right;
+      #instructDiv {
+        width: 50%;
+        margin: auto;
+        line-height: 0.5;
       }
     </style>
   </head>
   <body>
-    <!--<div id="posInfo">
-      <div id="left">
-        <h2>x position: </h2><h2 id="xpos"></h2>
-        <br>
-        <h2>y position: </h2><h2 id="ypos"></h2>
+      <!--<h1 id="name">Name</h1>
+      <h2>How to Play/Rules/Instructions: </h2>
+      <div id="instructDiv">
+        <ul>
+          <li>Devil chases the red circle.</li>
+          <li>Squares are powerups. Blue = Growth. Red = Speed.</li>
+          <li>Devil may only eat the blue square. Red Circle may only eat the red square.</li>
+        </ul>
       </div>
-      <div id="middle">
-        <h2>Distance: </h2><h2 id="dist"></h2>
-        <br>
-        <h2 id="displayEvent"></h2>
-      </div>
-      <div id="right">
-        <h2>x position: </h2><h2 id="xpos2"></h2>
-        <br>
-        <h2>y position: </h2><h2 id="ypos2"></h2>
-      </div>
-    </div>-->
-    
-    
-    <script>
-      var w = window.innerWidth;
-      var h = window.innerHeight;
-      
-      //Global objects
-      var ball = new ball();
-      var enemy = new enemy();
-      var speedUpForPlayer = new speedUpForPlayer();
-      var biggerEnemy = new biggerEnemy();
-      
-      //Store distances
-      var d; //distance from ball to enemy
-      var distToSpeed; //distance from ball to its food
-      var distToGrow; //distance from enemy to its food
-      
-      var ballSpeed = 10; //speed of the ball
-      var enemySize = 50; //
-      
-      function preload() {
-        devil = loadImage("devil.png");
-      }
-      function setup() {
-        createCanvas(w,h);
-        
-        //makes power up pop up in a random location
-        speedUpForPlayer.x = random(50,w - 50); //player's x
-        speedUpForPlayer.y = random(50,h - 50); //player's y
-        
-        biggerEnemy.x = random(50,w - 50); //enemy's x
-        biggerEnemy.y = random(50,h - 50); //enemy's y
-        
-      }
-      
-      function draw() {
-        background(200);
-        
-        ball.show(); //to show the object
-        ball.move(); //call ball.move()
-        ball.collision();
-        
-        enemy.show(); //shows the object
-        enemy.move(); //moves the object
-        
-        speedUpForPlayer.show(); //shows the power up
-        speedUpForPlayer.collect(); //activate powers
-        
-        biggerEnemy.show(); //shows the power up
-        biggerEnemy.collect(); //activate powers
-      }
-        
-      function ball() { //this is an object
-        //create this object at 100,100
-        this.x = 100;
-        this.y = 100;
-        
-        this.show = function() { //this is to show the object
-          fill(color('red'));
-          ellipse(this.x,this.y,50,50);
-        }
-        
-        this.move = function() { //this allows the object to move
-          if (keyIsDown(65) && (this.x > 25)) { //a key
-            this.x -= ballSpeed;
-          }
-          if (keyIsDown(68) && (this.x < w - 25)) { //d key
-            this.x += ballSpeed;
-          }
-          if (keyIsDown(87) && (this.y > 25)) { //w key
-            this.y -= ballSpeed;
-          }
-          if (keyIsDown(83) && (this.y < h - 25)) { //s key
-            this.y += ballSpeed;
-          }
-          //document.getElementById('xpos').innerHTML = this.x; //show x positon of ball
-          //document.getElementById('ypos').innerHTML = this.y; //show y position of ball
-        }
-        
-        this.collision = function() { //detects collision
-          //calculates distance
-          d = dist(this.x,this.y,enemy.x,enemy.y);
-          //document.getElementById('dist').innerHTML = d.toFixed(0);
-          //check for collison
-          if (d < 50) { //if distance is less than radius
-            window.alert("Red Loses!");
-            noloop(); //stops program
-          }
-        }
-      }
-      
-      function enemy() { //this is an object
-        //create this object at 100,100
-        this.x = w - 100;
-        this.y = 100;
+      <button onclick="toGame()">To Game</button> <--change button into spacebar instead-->
 
-        this.show = function() { //this is to show the object
-          /*fill(color('blue'));
-          ellipse(this.x,this.y,enemySize,enemySize);*/
-          imageMode(CENTER); //draws from center instead of top left corner
-          image(devil,this.x,this.y,enemySize * 1.3,enemySize * 1.3); //multiply by 1.2 bc actual image is small
-        }
-        
-        this.move = function() { //this allows the object to move
-          if (keyIsDown(74) && (this.x > 25)) { //j key
-            this.x -= 10;
-          }
-          if (keyIsDown(76) && (this.x < w - 25)) { //d key
-            this.x += 10;
-          }
-          if (keyIsDown(73) && (this.y > 25)) { //i key
-            this.y -= 10;
-          }
-          if (keyIsDown(75) && (this.y < h - 50)) { //k key
-            this.y += 10;
-          }
-          //document.getElementById('xpos2').innerHTML = this.x; //show x positon of ball
-          //document.getElementById('ypos2').innerHTML = this.y; //show y position of ball
-        }
-      }
-      
-      function speedUpForPlayer() {
-        this.x;
-        this.y;
-        
-        this.show = function() {
-          fill(color('red'));
-          rect(this.x,this.y,25,25);
-        }
-        
-        this.collect = function() {
-          distToSpeed = dist(this.x,this.y,ball.x,ball.y); //calc dist btwn this food and player
-          if (distToSpeed < 50) {
-            ballSpeed += 8; //increase ball speed
-            this.x = random(50,w - 50); //food appear in new spot
-            this.y = random(50,h - 50); //food appear in new spot
-            //document.getElementById('displayEvent').innerHTML = "Speed BOOST!";
-            setTimeout(function() {
-              //document.getElementById('displayEvent').innerHTML = ""; //clears "Speed BOOST" text
-              ballSpeed -= 8; //change back to original speed
-            }, 3000);
-          }
-        }
-      }
-      
-      function biggerEnemy() {
-        this.x;
-        this.y;
-        
-        this.show = function() {
-          fill(color('blue'));
-          rect(this.x,this.y,25,25);
-        }
-        
-        this.collect = function() {
-          distToGrow = dist(this.x,this.y,enemy.x,enemy.y); //calc dist btwn this food and enemy
-          if (distToGrow < 50) {
-            enemySize += 15; //increase ball speed
-            this.x = random(50,w - 50); //food appear in new spot
-            this.y = random(50,h - 50); //food appear in new spot
-            setTimeout(function() {
-              enemySize -= 15; //change back to original speed
-            }, 3000);
-          }
-        }
-      }
-    </script>
+
+      <h1 id="name">Gravity Game</h1>
+
+      <h2>How To Play: </h2>
+      <div id="instructDiv">
+        <p>- Avoid the blue rectangles.</p>
+        <p>- Reach the goal to win!</p>
+      </div>
+      <br>
+
+      <button onclick="location.href='gravity.html'">Begin</button>
   </body>
 </html>
