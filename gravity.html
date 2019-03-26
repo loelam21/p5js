@@ -1,6 +1,7 @@
 <html>
   <head>
     <script src="p5/p5.min.js"></script>
+    <script src="p5.collide2D-master/p5.collide2d.min.js"></script>
     <style>
       body {
         margin: 0;
@@ -11,26 +12,61 @@
   </head>
   <body>
     <script>
+      //later: allow user to choose amount of obstacles. speed of obstacles - easy, normal, hard difficulty
       var w = window.innerWidth;
       var h = window.innerHeight;
       
       var jumper = new jumper();
+      var goal = new goal();
+      
+      var obstaclesArr = [];
+      var obstacleDistance = w - 200; //start spawning at the right side of screen
+
+      var hit = false;
       
       function setup() {
         createCanvas(w,h);
+
+        for (var i = 0; i < 50; i++) { //creates 50 obstacles
+          var randWidth = random(30,75);
+          var randHeight = random(30,75);
+          obstaclesArr.push(new obstacle(randWidth,randHeight));
+          obstacleDistance += 75 + random(300); //increase distance between objects
+          obstaclesArr[i].x = obstacleDistance; 
+          obstaclesArr[i].y = random(50,h-50); //gives the obstacle a random y position
+
+          /*if (i == 49) {
+            //make the goal
+            //goal.x = obstacleDistance + 200;
+            
+          }*/
+        }
       }
+
       function draw() {
         background(0);
-        
+        noStroke();
+
         jumper.show();
         jumper.update();
+
+        for (var i = 0; i < obstaclesArr.length; i++) { //show, update, and detect collision for all obstacles
+          obstaclesArr[i].show();
+          obstaclesArr[i].update();
+          obstaclesArr[i].collide();
+
+          /*if (i == 49) {
+            goal.show();
+          }*/
+        }
+
       }
       
       function jumper() {
-        this.x = 50;
+        this.x = 75;
         this.y = 0;
         
-        this.gravity = 0.1; //the force of gravity
+        this.gravity = 0.5; //the force of gravity
         this.lift = -10; //opposing force
         this.velocity = 0; //speed of gravity
         
@@ -46,9 +82,10 @@
           this.y += this.velocity;
           this.velocity *= 0.9; //air resistance
           
+          //Prevent jumper from leaving the screen
           if (this.y > h) { //stop on floor
-            this.y = h; //prevents jumper from leaving the screen
-            this.velocity = 0;
+            this.y = h;
+            this.velocity = -10; //-10 to bounce on floor
           }
           if (this.y < 0) { //stop on ceiling
             this.y = 0;
@@ -57,6 +94,44 @@
         }
       }
       
+      function obstacle(randWidth,randHeight) {
+        this.x = w - 100;
+        this.y;
+        
+        this.gravity = -0.8; //the force of gravity
+        this.velocity = 0; //speed of gravity
+        
+        this.show = function() {
+          fill(color('blue'));
+          rect(this.x,this.y,randWidth,randHeight);
+        }
+        this.update = function() {
+          this.velocity += this.gravity;
+          this.velocity *= 0.9; //air resistance
+          this.x += this.velocity;
+        }
+        this.collide = function() {
+          hit = collideRectCircle(this.x,this.y,randWidth,randHeight,jumper.x,jumper.y,50);
+          if (hit) {
+            window.alert("YOU LOSE!");
+            noLoop();
+          }
+        }
+      }
+
+      function goal() {
+        this.x = 500; //obstacleDistance;
+        this.y = 0;
+
+        this.show = function() {
+          push();
+          stroke(255);
+          strokeWeight(20);
+          line(this.x,this.y,this.x,h); //goes from top of screen to bottom
+          pop();
+        }
+      }
+
       function keyPressed() {
         if (keyCode == 32) { //ENTER key
           jumper.up();
