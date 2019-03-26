@@ -17,29 +17,29 @@
       var h = window.innerHeight;
       
       var jumper = new jumper();
-      var goal = new goal();
+      var goal;
       
       var obstaclesArr = [];
+      var numOfObstacles = 50;
       var obstacleDistance = w - 200; //start spawning at the right side of screen
 
-      var hit = false;
+      var obstacleHit = false;
+      var goalHit = false;
       
       function setup() {
         createCanvas(w,h);
 
-        for (var i = 0; i < 50; i++) { //creates 50 obstacles
+        for (var i = 0; i < numOfObstacles; i++) { //creates the obstacles
           var randWidth = random(30,75);
           var randHeight = random(30,75);
           obstaclesArr.push(new obstacle(randWidth,randHeight));
-          obstacleDistance += 75 + random(300); //increase distance between objects
+          obstacleDistance += 75 + random(300); //increase distance between obstacle
           obstaclesArr[i].x = obstacleDistance; 
           obstaclesArr[i].y = random(50,h-50); //gives the obstacle a random y position
 
-          /*if (i == 49) {
-            //make the goal
-            //goal.x = obstacleDistance + 200;
-            
-          }*/
+          if (i == numOfObstacles - 1) { //make the goal after all the obstacles
+            goal = new goal(obstacleDistance);
+          }
         }
       }
 
@@ -50,14 +50,14 @@
         jumper.show();
         jumper.update();
 
+        goal.show();
+        goal.update();
+        goal.collide();
+
         for (var i = 0; i < obstaclesArr.length; i++) { //show, update, and detect collision for all obstacles
           obstaclesArr[i].show();
           obstaclesArr[i].update();
           obstaclesArr[i].collide();
-
-          /*if (i == 49) {
-            goal.show();
-          }*/
         }
 
       }
@@ -111,24 +111,40 @@
           this.x += this.velocity;
         }
         this.collide = function() {
-          hit = collideRectCircle(this.x,this.y,randWidth,randHeight,jumper.x,jumper.y,50);
-          if (hit) {
+          obstacleHit = collideRectCircle(this.x,this.y,randWidth,randHeight,jumper.x,jumper.y,50);
+          if (obstacleHit) {
             window.alert("YOU LOSE!");
             noLoop();
           }
         }
       }
 
-      function goal() {
-        this.x = 500; //obstacleDistance;
+      function goal(x) {
+        this.x = x + 500;
         this.y = 0;
+
+        this.gravity = -0.8; //the force of gravity
+        this.velocity = 0; //speed of gravity
 
         this.show = function() {
           push();
-          stroke(255);
+          stroke(235);
           strokeWeight(20);
+          //line(obstacleDistance,this.y,obstacleDistance,h);
           line(this.x,this.y,this.x,h); //goes from top of screen to bottom
           pop();
+        }
+        this.update = function() {
+          this.velocity += this.gravity;
+          this.velocity *= 0.9; //air resistance
+          this.x += this.velocity;
+        }
+        this.collide = function() {
+          goalHit = collideLineCircle(this.x,this.y,this.x,h,jumper.x,jumper.y,50);
+          if (goalHit) {
+            window.alert("YOU WIN!");
+            noLoop();
+          }
         }
       }
 
