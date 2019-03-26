@@ -12,7 +12,9 @@
   </head>
   <body>
     <script>
-      //later: allow user to choose amount of obstacles. speed of obstacles - easy, normal, hard difficulty
+      var amt = Number(localStorage.getItem("amtOfObstacles"));
+      var mode = Number(localStorage.getItem("mode"));
+      
       var w = window.innerWidth;
       var h = window.innerHeight;
       
@@ -20,7 +22,7 @@
       var goal;
       
       var obstaclesArr = [];
-      var numOfObstacles = 50;
+      var numOfObstacles = amt;
       var obstacleDistance = w - 200; //start spawning at the right side of screen
 
       var obstacleHit = false;
@@ -98,7 +100,7 @@
         this.x = w - 100;
         this.y;
         
-        this.gravity = -0.8; //the force of gravity
+        this.gravity = mode; //the force of gravity
         this.velocity = 0; //speed of gravity
         
         this.show = function() {
@@ -123,7 +125,7 @@
         this.x = x + 500;
         this.y = 0;
 
-        this.gravity = -0.8; //the force of gravity
+        this.gravity = mode; //the force of gravity
         this.velocity = 0; //speed of gravity
 
         this.show = function() {
