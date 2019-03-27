@@ -1,12 +1,44 @@
 <html>
   <head>
+    <title>Gravity Game</title>
     <script src="p5/p5.min.js"></script>
     <script src="p5.collide2D-master/p5.collide2d.min.js"></script>
+    <script language="javascript" type="text/javascript" src="p5/addons/p5.dom.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Staatliches|Source+Sans+Pro" rel="stylesheet">
     <style>
       body {
         margin: 0;
         padding: 0;
         overflow: hidden;
+      }
+      #score {
+        color: white;
+        font-family: 'Source Sans Pro', sans-serif;
+      }
+      .winlose {
+        font-size: 10vw;
+        color: white;
+        text-shadow: 4px 8px 2px red;
+        font-family: 'Staatliches', cursive;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      #win {
+        text-shadow: 4px 8px 2px rgb(26, 153, 26);
+      }
+      .retry {
+        width: 100px;
+        height: 40px;
+        font-size: 20px;
+        font-family: 'Staatliches', cursive;
+      }
+      .mainMenu {
+        width: 100px;
+        height: 40px;
+        font-size: 20px;
+        font-family: 'Staatliches', cursive;
       }
     </style>
   </head>
@@ -15,6 +47,13 @@
       var amt = Number(localStorage.getItem("amtOfObstacles"));
       var mode = Number(localStorage.getItem("mode"));
       
+      /*var score = 0;
+      var scoreboard;*/
+      var win;
+      var lose;
+      var retry;
+      var mainMeny;
+
       var w = window.innerWidth;
       var h = window.innerHeight;
       
@@ -29,6 +68,11 @@
       var goalHit = false;
       
       function setup() {
+        /*//player's score
+        scoreboard = createDiv("Score = " + score);
+        scoreboard.position(w - 100, 50);
+        scoreboard.id("score");*/
+
         createCanvas(w,h);
 
         for (var i = 0; i < numOfObstacles; i++) { //creates the obstacles
@@ -37,12 +81,16 @@
           obstaclesArr.push(new obstacle(randWidth,randHeight));
           obstacleDistance += 75 + random(300); //increase distance between obstacle
           obstaclesArr[i].x = obstacleDistance; 
-          obstaclesArr[i].y = random(50,h-50); //gives the obstacle a random y position
+          obstaclesArr[i].y = random(10,h-50); //gives the obstacle a random y position
 
           if (i == numOfObstacles - 1) { //make the goal after all the obstacles
             goal = new goal(obstacleDistance);
           }
         }
+      }
+
+      function windowResized() { //resizes the canvas if window is resized
+        resizeCanvas(windowWidth,windowHeight);
       }
 
       function draw() {
@@ -60,12 +108,13 @@
           obstaclesArr[i].show();
           obstaclesArr[i].update();
           obstaclesArr[i].collide();
+          //obstaclesArr[i].score(); 
         }
 
       }
       
       function jumper() {
-        this.x = 75;
+        this.x = 100;
         this.y = 0;
         
         this.gravity = 0.5; //the force of gravity
@@ -111,14 +160,32 @@
           this.velocity += this.gravity;
           this.velocity *= 0.9; //air resistance
           this.x += this.velocity;
+          myX = this.x
         }
         this.collide = function() {
           obstacleHit = collideRectCircle(this.x,this.y,randWidth,randHeight,jumper.x,jumper.y,50);
           if (obstacleHit) {
-            window.alert("YOU LOSE!");
             noLoop();
+            lose = createDiv("YOU LOSE!");
+            lose.class("winlose"); //for style
+
+            retry = createButton("Retry");
+            retry.position(w * 0.30,h * 0.7);
+            retry.class("retry");
+            retry.mousePressed(replay); //refresh page
+
+            mainMenu = createButton("Main Menu");
+            mainMenu.position(w * 0.64,h * 0.7)
+            mainMenu.class("mainMenu");
+            mainMenu.mousePressed(homePage); //goes to home page
           }
         }
+        /*this.score = function() {
+          if (this.x < jumper.x) {
+            score++;
+            scoreboard.html("Score = " + score);
+          }
+        }*/
       }
 
       function goal(x) {
@@ -144,10 +211,28 @@
         this.collide = function() {
           goalHit = collideLineCircle(this.x,this.y,this.x,h,jumper.x,jumper.y,50);
           if (goalHit) {
-            window.alert("YOU WIN!");
-            noLoop();
+            win = createDiv("YOU WIN!"); //creates a div box with text saying you win
+            win.class("winlose"); //for style
+            win.id("win"); //for style
+
+            retry = createButton("Play Again");
+            retry.position(w * 0.30,h * 0.7);
+            retry.class("retry");
+            retry.mousePressed(replay); //refresh page
+
+            mainMenu = createButton("Main Menu");
+            mainMenu.position(w * 0.64,h * 0.7)
+            mainMenu.class("mainMenu");
+            mainMenu.mousePressed(homePage); //goes to home page
           }
         }
+      }
+      
+      function replay() {
+        window.location.reload();
+      }
+      function homePage() {
+        location.href="index.html";
       }
 
       function keyPressed() {
