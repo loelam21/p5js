@@ -69,9 +69,11 @@
       var goalHit = false;
       
       var music;
+      var deathSound;
       
       function preload() {
         music = loadSound("epicBGmusic.ogg");
+        deathSound = loadSound("marioDeathSound.mp3");
       }
 
       function setup() {
@@ -170,6 +172,8 @@
         this.collide = function() {
           obstacleHit = collideRectCircle(this.x,this.y,randWidth,randHeight,jumper.x,jumper.y,50);
           if (obstacleHit) {
+            music.stop();
+            deathSound.play();
             noLoop();
             lose = createDiv("YOU LOSE!");
             lose.class("winlose"); //for style
