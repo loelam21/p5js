@@ -12,10 +12,23 @@
         padding: 0;
         overflow: hidden;
       }
-      #score {
+      #progress {
+        color: white;
+        position: fixed;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        /*top: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 20%;
+        background-color: white;*/
+      }
+      /*#score {
         color: white;
         font-family: 'Source Sans Pro', sans-serif;
-      }
+      }*/
       .winlose {
         font-size: 10vw;
         color: white;
@@ -50,6 +63,7 @@
       
       /*var score = 0;
       var scoreboard;*/
+      
       var win;
       var lose;
       var retry;
@@ -58,6 +72,7 @@
       var w = window.innerWidth;
       var h = window.innerHeight;
       
+      //var progressBar = new progressBar();
       var jumper = new jumper();
       var goal;
       
@@ -91,11 +106,13 @@
           var randHeight = random(30,75);
           obstaclesArr.push(new obstacle(randWidth,randHeight));
           obstacleDistance += 75 + random(300); //increase distance between obstacle
-          obstaclesArr[i].x = obstacleDistance; 
+          obstaclesArr[i].x = obstacleDistance;
           obstaclesArr[i].y = random(10,h-50); //gives the obstacle a random y position
 
           if (i == numOfObstacles - 1) { //make the goal after all the obstacles
             goal = new goal(obstacleDistance);
+
+            console.log("first " + obstacleDistance);
           }
         }
       }
@@ -115,10 +132,35 @@
           obstaclesArr[i].show();
           obstaclesArr[i].update();
           obstaclesArr[i].collide();
-          //obstaclesArr[i].score(); 
+          //obstaclesArr[i].score();
         }
-
+        
+        //progressBar.show(); //placed here to send to front-most layer
+        //progressBar.update();
       }
+
+      /*function progressBar() {
+        this.x = 100;
+        this.y = h * 0.02;
+
+        this.show = function() {
+          fill(color("rgba(255,255,255,0.7)")); //semi-transparent white
+          rect(this.x,this.y,w * 0.8,10);
+        }
+        this.update = function() { //map the distance btwn jumper and goal
+          var distance = dist(jumper.x,jumper.y,goal.x,jumper.y); //distance between jumper and goal
+          for (var i = 0; i < 1; i++) {
+            setInterval(function() {
+            console.log(distance);
+          },2000);
+          }
+
+          //MAP HERE
+          //after, center the bar
+          
+
+        }
+      }*/
       
       function jumper() {
         this.x = 100;
@@ -245,7 +287,7 @@
       }
 
       function keyPressed() {
-        if (keyCode == 32) { //ENTER key
+        if ((keyCode == 32) || (mouseIsPressed)){ //ENTER key
           jumper.up();
         }
       }
