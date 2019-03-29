@@ -57,9 +57,9 @@
 
       <h2>Choose a Difficulty:</h2>
       <div>
-        <button id="easyButton" onclick="colorMe('#42f442','white','white'), mode(50,-1.2)">Easy</button>
-        <button id="mediumButton" onclick="colorMe('white','#42f442','white'), mode(100,-1.8)">Medium</button>
-        <button id="hardButton" onclick="colorMe('white','white','#42f442'), mode(200,-2.5)">Hard</button>
+        <button id="easyButton" onclick="colorMe('#42f442','white','white'), mode(-1.2,250,500)">Easy</button>
+        <button id="mediumButton" onclick="colorMe('white','#42f442','white'), mode(-1.7,130,300)">Medium</button>
+        <button id="hardButton" onclick="colorMe('white','white','#42f442'), mode(-2.5,100,250)">Hard</button>
       </div>
       <br>
 
@@ -68,7 +68,7 @@
       <h3 id="warning"></h3>
 
       <script>
-        function colorMe(easy,medium,hard) {
+        function colorMe(easy,medium,hard) { //button colors to indicate selected mode
           document.getElementById('easyButton').style.borderColor = easy;
           document.getElementById('mediumButton').style.borderColor = medium;
           document.getElementById('hardButton').style.borderColor = hard;
@@ -77,10 +77,11 @@
         var chosen = false;
         var clicked = 0;
 
-        function mode(amt,speed) {
-          chosen = true;
-          localStorage.setItem("amtOfObstacles",amt)
+        function mode(speed,minTime,maxTime) { //save difficulty to LS
           localStorage.setItem("mode",speed);
+          localStorage.setItem("min",minTime);
+          localStorage.setItem("max",maxTime);
+          chosen = true;
         }
 
         function draw() {

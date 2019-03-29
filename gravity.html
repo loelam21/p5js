@@ -58,11 +58,16 @@
   </head>
   <body>
     <script>
-      var amt = Number(localStorage.getItem("amtOfObstacles"));
       var mode = Number(localStorage.getItem("mode"));
+      var minTime = Number(localStorage.getItem("min"));
+      var maxTime = Number(localStorage.getItem("max")); //max time until next obstacle's spawn
       
       /*var score = 0;
       var scoreboard;*/
+
+      var seconds = 0; //time elapsed var
+      var timing;
+      var totalTime = 25; //game lasts for 25 seconds
       
       var win;
       var lose;
@@ -74,11 +79,11 @@
       
       //var progressBar = new progressBar();
       var jumper = new jumper();
-      var goal;
+      var goal = new goal();
+      var spawnGoal = false;
       
       var obstaclesArr = [];
-      var numOfObstacles = amt;
-      var obstacleDistance = w - 200; //start spawning at the right side of screen
+      var arrIndex = 0;
 
       var obstacleHit = false;
       var goalHit = false;
@@ -100,21 +105,33 @@
         createCanvas(w,h);
 
         music.play();
-
-        for (var i = 0; i < numOfObstacles; i++) { //creates the obstacles
-          var randWidth = random(30,75);
-          var randHeight = random(30,75);
-          obstaclesArr.push(new obstacle(randWidth,randHeight));
-          obstacleDistance += 75 + random(300); //increase distance between obstacle
-          obstaclesArr[i].x = obstacleDistance;
-          obstaclesArr[i].y = random(10,h-50); //gives the obstacle a random y position
-
-          if (i == numOfObstacles - 1) { //make the goal after all the obstacles
-            goal = new goal(obstacleDistance);
-
-            console.log("first " + obstacleDistance);
+        
+        setInterval(function () { //counts seconds elapsed 
+          seconds++;
+        }, 1000);
+        
+        var timing = random(minTime,maxTime); //timing for space btwn obstacles
+        var myFunction = function() { //allows for randomized timing
+          timing = random(minTime,maxTime); //change timing
+          
+          if (seconds < totalTime) { //if not 25 seconds yet...
+            var randWidth = random(30,75); //obstacle's width
+            var randHeight = random(30,75); //obstacle's height
+            obstaclesArr.push(new obstacle(randWidth,randHeight)); //make new obstacle and store in an array
+            obstaclesArr[arrIndex].y = random(10,h-50); //gives the obstacle a random y position
+            arrIndex++;
+            setTimeout(function() {
+              obstaclesArr.shift(); //delete offscreen obstacles
+              arrIndex--; //rebalance after shifting
+            }, minTime * 40); //multiply 40 to make sure it's offscreen
           }
+          else { //when 25 seconds pass...
+            spawnGoal = true;
+          }
+          
+          setTimeout(myFunction, timing);
         }
+        setTimeout(myFunction, timing);
       }
 
       function draw() {
@@ -123,10 +140,6 @@
 
         jumper.show();
         jumper.update();
-
-        goal.show();
-        goal.update();
-        goal.collide();
 
         for (var i = 0; i < obstaclesArr.length; i++) { //show, update, and detect collision for all obstacles
           obstaclesArr[i].show();
@@ -137,6 +150,14 @@
         
         //progressBar.show(); //placed here to send to front-most layer
         //progressBar.update();
+
+        if (spawnGoal) { //will be true after all obstacles spawn
+          goal.show();
+          goal.update();
+          goal.collide();
+          //setTimeout to delete
+        }
+        
       }
 
       /*function progressBar() {
@@ -195,7 +216,7 @@
       }
       
       function obstacle(randWidth,randHeight) {
-        this.x = w - 100;
+        this.x = w * 1.1; //spawn offscreen
         this.y;
         
         this.gravity = mode; //the force of gravity
@@ -212,7 +233,7 @@
           myX = this.x
         }
         this.collide = function() {
-          obstacleHit = collideRectCircle(this.x,this.y,randWidth,randHeight,jumper.x,jumper.y,50);
+          obstacleHit = collideRectCircle(this.x,this.y,randWidth,randHeight,jumper.x,jumper.y,50); //check if colliding
           if (obstacleHit) {
             music.stop();
             deathSound.play();
@@ -239,8 +260,8 @@
         }*/
       }
 
-      function goal(x) {
-        this.x = x + 500;
+      function goal() {
+        this.x = w * 1.2; //spawn offscreen
         this.y = 0;
 
         this.gravity = mode; //the force of gravity
@@ -250,7 +271,6 @@
           push();
           stroke(235);
           strokeWeight(20);
-          //line(obstacleDistance,this.y,obstacleDistance,h);
           line(this.x,this.y,this.x,h); //goes from top of screen to bottom
           pop();
         }
@@ -268,12 +288,12 @@
 
             retry = createButton("Play Again");
             retry.position(w * 0.30,h * 0.7);
-            retry.class("retry");
+            retry.class("retry"); //for style
             retry.mousePressed(replay); //refresh page
 
             mainMenu = createButton("Main Menu");
             mainMenu.position(w * 0.64,h * 0.7)
-            mainMenu.class("mainMenu");
+            mainMenu.class("mainMenu"); //for style
             mainMenu.mousePressed(homePage); //goes to home page
           }
         }
@@ -287,7 +307,7 @@
       }
 
       function keyPressed() {
-        if (keyCode == 32) { //ENTER key
+        if (keyCode == 32) { //spacebar key
           jumper.up();
         }
       }
