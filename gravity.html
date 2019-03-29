@@ -287,9 +287,13 @@
       }
 
       function keyPressed() {
-        if ((keyCode == 32) || (mouseIsPressed)){ //ENTER key
+        if (keyCode == 32) { //ENTER key
           jumper.up();
         }
+      }
+
+      function mouseClicked() { //for mobile
+        jumper.up();
       }
     </script>
   </body>
