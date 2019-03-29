@@ -1,5 +1,6 @@
 <html>
   <head>
+    <title>Gravity Game</title>
     <script src="p5/p5.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Staatliches|Source+Sans+Pro" rel="stylesheet">
     <style>
@@ -13,7 +14,7 @@
       }
       #name {
         font-size: 5vw;
-        margin-top: 10%;
+        margin-top: 6.5%;
         font-family: 'Staatliches', cursive;
       }
       #instructDiv {
@@ -61,7 +62,6 @@
         <button id="hardButton" onclick="colorMe('white','white','#42f442'), mode(200,-2.5)">Hard</button>
       </div>
       <br>
-      <br>
 
       <h2>Press any key to start.</h2>
 
@@ -75,6 +75,7 @@
         }
 
         var chosen = false;
+        var clicked = 0;
 
         function mode(amt,speed) {
           chosen = true;
@@ -82,17 +83,17 @@
           localStorage.setItem("mode",speed);
         }
 
-
         function draw() {
-          if ((keyIsPressed === true) && (chosen === true)) {
+          if ((keyIsPressed === true) && (chosen === true) || ((mouseIsPressed) && (chosen === true))) {
             location.href="gravity.html";
           }
-          else if ((keyIsPressed === true) && (chosen === false)) {
-            document.getElementById('warning').innerHTML = "Choose a difficulty first!";
+          else if ((keyIsPressed === true) && (chosen === false) || ((clicked > 1) && (chosen === false))) {
+            document.getElementById('warning').innerHTML = "Choose a difficulty please!";
           }
-          /*if (touches.length > 0) {
-            location.href="gravity.html";
-          }*/
+        }
+        
+        function mouseClicked() { //makes sure warning only appears if mouse is clicked 2 or more times
+          clicked++;
         }
       </script>
   </body>
