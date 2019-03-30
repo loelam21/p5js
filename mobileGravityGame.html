@@ -312,8 +312,9 @@
         }
       }
 
-      function mouseClicked() { //for mobile
+      function touchStarted() { //for mobile
         jumper.up();
+        return false; //prevent default behavior
       }
     </script>
   </body>
