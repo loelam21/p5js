@@ -285,6 +285,7 @@
         this.collide = function() {
           goalHit = collideLineCircle(this.x,this.y,this.x,h,jumper.x,jumper.y,50);
           if (goalHit) {
+            preventDefaultTF = true;
             win = createDiv("YOU WIN!"); //creates a div box with text saying you win
             win.class("winlose"); //for style
             win.id("win"); //for style
