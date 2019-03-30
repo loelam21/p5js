@@ -87,6 +87,8 @@
 
       var obstacleHit = false;
       var goalHit = false;
+
+      var preventDefaultTF = false;
       
       //var music;
       var deathSound;
@@ -235,6 +237,7 @@
         this.collide = function() {
           obstacleHit = collideRectCircle(this.x,this.y,randWidth,randHeight,jumper.x,jumper.y,50); //check if colliding
           if (obstacleHit) {
+            preventDefaultTF = true;
             //music.stop();
             deathSound.play();
             noLoop();
@@ -314,7 +317,7 @@
 
       function touchStarted() { //for mobile
         jumper.up();
-        return false; //prevent default behavior
+        return preventDefaultTF; //prevent default behavior
       }
     </script>
   </body>
