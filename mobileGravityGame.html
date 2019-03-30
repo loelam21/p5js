@@ -1,0 +1,320 @@
+<html>
+  <head>
+    <title>Gravity Game</title>
+    <script src="p5/p5.min.js"></script> <!--must put p5 library first-->
+    <script src="p5.collide2D-master/p5.collide2d.min.js"></script>
+    <script language="javascript" type="text/javascript" src="p5/addons/p5.dom.min.js"></script>
+    <script language="javascript" type="text/javascript" src="p5/addons/p5.sound.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Staatliches|Source+Sans+Pro" rel="stylesheet">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      #progress {
+        color: white;
+        position: fixed;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        /*top: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 20%;
+        background-color: white;*/
+      }
+      /*#score {
+        color: white;
+        font-family: 'Source Sans Pro', sans-serif;
+      }*/
+      .winlose {
+        font-size: 10vw;
+        color: white;
+        text-shadow: 4px 8px 2px red;
+        font-family: 'Staatliches', cursive;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      #win {
+        text-shadow: 4px 8px 2px rgb(26, 153, 26);
+      }
+      .retry {
+        width: 100px;
+        height: 40px;
+        font-size: 20px;
+        font-family: 'Staatliches', cursive;
+      }
+      .mainMenu {
+        width: 100px;
+        height: 40px;
+        font-size: 20px;
+        font-family: 'Staatliches', cursive;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      var mode = Number(localStorage.getItem("mode"));
+      var minTime = Number(localStorage.getItem("min"));
+      var maxTime = Number(localStorage.getItem("max")); //max time until next obstacle's spawn
+      
+      /*var score = 0;
+      var scoreboard;*/
+
+      var seconds = 0; //time elapsed var
+      var timing;
+      var totalTime = 25; //game lasts for 25 seconds
+      
+      var win;
+      var lose;
+      var retry;
+      var mainMenu;
+
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      
+      //var progressBar = new progressBar();
+      var jumper = new jumper();
+      var goal = new goal();
+      var spawnGoal = false;
+      
+      var obstaclesArr = [];
+      var arrIndex = 0;
+
+      var obstacleHit = false;
+      var goalHit = false;
+      
+      //var music;
+      var deathSound;
+      
+      function preload() {
+        //music = loadSound("epicBGmusic.ogg"); //can't load ogg files on iOS?
+        deathSound = loadSound("sadTrombone.mp3");
+      }
+
+      function setup() {
+        /*//player's score
+        scoreboard = createDiv("Score = " + score);
+        scoreboard.position(w - 100, 50);
+        scoreboard.id("score");*/
+
+        createCanvas(w,h);
+
+        //music.play();
+        
+        setInterval(function () { //counts seconds elapsed 
+          seconds++;
+        }, 1000);
+        
+        var timing = random(minTime,maxTime); //timing for space btwn obstacles
+        var myFunction = function() { //allows for randomized timing
+          timing = random(minTime,maxTime); //change timing
+          
+          if (seconds < totalTime) { //if not 25 seconds yet...
+            var randWidth = random(30,75); //obstacle's width
+            var randHeight = random(30,75); //obstacle's height
+            obstaclesArr.push(new obstacle(randWidth,randHeight)); //make new obstacle and store in an array
+            obstaclesArr[arrIndex].y = random(10,h-50); //gives the obstacle a random y position
+            arrIndex++;
+            setTimeout(function() {
+              obstaclesArr.shift(); //delete offscreen obstacles
+              arrIndex--; //rebalance after shifting
+            }, minTime * 40); //multiply 40 to make sure it's offscreen
+          }
+          else { //when 25 seconds pass...
+            spawnGoal = true;
+          }
+          
+          setTimeout(myFunction, timing);
+        }
+        setTimeout(myFunction, timing);
+      }
+
+      function draw() {
+        background(0);
+        noStroke();
+
+        jumper.show();
+        jumper.update();
+
+        for (var i = 0; i < obstaclesArr.length; i++) { //show, update, and detect collision for all obstacles
+          obstaclesArr[i].show();
+          obstaclesArr[i].update();
+          obstaclesArr[i].collide();
+          //obstaclesArr[i].score();
+        }
+        
+        //progressBar.show(); //placed here to send to front-most layer
+        //progressBar.update();
+
+        if (spawnGoal) { //will be true after all obstacles spawn
+          goal.show();
+          goal.update();
+          goal.collide();
+          //setTimeout to delete
+        }
+        
+      }
+
+      /*function progressBar() {
+        this.x = 100;
+        this.y = h * 0.02;
+
+        this.show = function() {
+          fill(color("rgba(255,255,255,0.7)")); //semi-transparent white
+          rect(this.x,this.y,w * 0.8,10);
+        }
+        this.update = function() { //map the distance btwn jumper and goal
+          var distance = dist(jumper.x,jumper.y,goal.x,jumper.y); //distance between jumper and goal
+          for (var i = 0; i < 1; i++) {
+            setInterval(function() {
+            console.log(distance);
+          },2000);
+          }
+
+          //MAP HERE
+          //after, center the bar
+          
+
+        }
+      }*/
+      
+      function jumper() {
+        this.x = 100;
+        this.y = 0;
+        
+        this.gravity = 0.5; //the force of gravity
+        this.lift = -10; //opposing force
+        this.velocity = 0; //speed of gravity
+        
+        this.show = function() {
+          fill(color('red'));
+          ellipse(this.x,this.y,50,50);
+        }
+        this.up = function() {
+          this.velocity += this.lift;
+        }
+        this.update = function() {
+          this.velocity += this.gravity;
+          this.y += this.velocity;
+          this.velocity *= 0.9; //air resistance
+          
+          //Prevent jumper from leaving the screen
+          if (this.y > h) { //stop on floor
+            this.y = h;
+            this.velocity = -10; //-10 to bounce on floor
+          }
+          if (this.y < 0) { //stop on ceiling
+            this.y = 0;
+            this.velocity = 0;
+          }
+        }
+      }
+      
+      function obstacle(randWidth,randHeight) {
+        this.x = w * 1.1; //spawn offscreen
+        this.y;
+        
+        this.gravity = mode; //the force of gravity
+        this.velocity = 0; //speed of gravity
+        
+        this.show = function() {
+          fill(color('blue'));
+          rect(this.x,this.y,randWidth,randHeight);
+        }
+        this.update = function() {
+          this.velocity += this.gravity;
+          this.velocity *= 0.9; //air resistance
+          this.x += this.velocity;
+          myX = this.x
+        }
+        this.collide = function() {
+          obstacleHit = collideRectCircle(this.x,this.y,randWidth,randHeight,jumper.x,jumper.y,50); //check if colliding
+          if (obstacleHit) {
+            //music.stop();
+            deathSound.play();
+            noLoop();
+            lose = createDiv("YOU LOSE!");
+            lose.class("winlose"); //for style
+
+            retry = createButton("Retry");
+            retry.position(w * 0.30,h * 0.7);
+            retry.class("retry");
+            retry.mousePressed(replay); //refresh page
+
+            mainMenu = createButton("Main Menu");
+            mainMenu.position(w * 0.64,h * 0.7)
+            mainMenu.class("mainMenu");
+            mainMenu.mousePressed(homePage); //goes to home page
+          }
+        }
+        /*this.score = function() {
+          if (this.x < jumper.x) {
+            score++;
+            scoreboard.html("Score = " + score);
+          }
+        }*/
+      }
+
+      function goal() {
+        this.x = w * 1.2; //spawn offscreen
+        this.y = 0;
+
+        this.gravity = mode; //the force of gravity
+        this.velocity = 0; //speed of gravity
+
+        this.show = function() {
+          push();
+          stroke(235);
+          strokeWeight(20);
+          line(this.x,this.y,this.x,h); //goes from top of screen to bottom
+          pop();
+        }
+        this.update = function() {
+          this.velocity += this.gravity;
+          this.velocity *= 0.9; //air resistance
+          this.x += this.velocity;
+        }
+        this.collide = function() {
+          goalHit = collideLineCircle(this.x,this.y,this.x,h,jumper.x,jumper.y,50);
+          if (goalHit) {
+            win = createDiv("YOU WIN!"); //creates a div box with text saying you win
+            win.class("winlose"); //for style
+            win.id("win"); //for style
+
+            retry = createButton("Play Again");
+            retry.position(w * 0.30,h * 0.7);
+            retry.class("retry"); //for style
+            retry.mousePressed(replay); //refresh page
+
+            mainMenu = createButton("Main Menu");
+            mainMenu.position(w * 0.64,h * 0.7)
+            mainMenu.class("mainMenu"); //for style
+            mainMenu.mousePressed(homePage); //goes to home page
+          }
+        }
+      }
+      
+      function replay() {
+        window.location.reload();
+      }
+      function homePage() {
+        location.href="index.html";
+      }
+
+      function keyPressed() {
+        if (keyCode == 32) { //spacebar key
+          jumper.up();
+        }
+      }
+
+      function mouseClicked() { //for mobile
+        jumper.up();
+      }
+    </script>
+  </body>
+</html>

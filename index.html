@@ -28,6 +28,14 @@
       #warning {
         color: red;
       }
+      #mobileButton {
+        color: black;
+        background-color: black;
+        border-color: black;
+        position: fixed; /*positioned relative to the viewport; stays in same place even if page scrolls */
+        top: 0;
+        left: 0;
+      }
     </style>
   </head>
   <body>
@@ -67,6 +75,8 @@
 
       <h3 id="warning"></h3>
 
+      <button onclick="toMobileGame()" id="mobileButton">Kokodesu.</button><!--secret button for mobile testing-->
+
       <script>
         function colorMe(easy,medium,hard) { //button colors to indicate selected mode
           document.getElementById('easyButton').style.borderColor = easy;
@@ -85,16 +95,20 @@
         }
 
         function draw() {
-          if ((keyIsPressed === true) && (chosen === true) || ((mouseIsPressed) && (chosen === true))) {
+          if ((keyIsPressed === true) && (chosen === true)) { //|| ((mouseIsPressed) && (chosen === true))) {
             location.href="gravity.html";
           }
-          else if ((keyIsPressed === true) && (chosen === false) || ((clicked > 1) && (chosen === false))) {
+          else if ((keyIsPressed === true) && (chosen === false)) { //|| ((clicked > 1) && (chosen === false))) {
             document.getElementById('warning').innerHTML = "Choose a difficulty please!";
           }
         }
         
         function mouseClicked() { //makes sure warning only appears if mouse is clicked 2 or more times
           clicked++;
+        }
+
+        function toMobileGame() { //go to mobile game
+          location.href="mobileGravityGame.html";
         }
       </script>
   </body>
