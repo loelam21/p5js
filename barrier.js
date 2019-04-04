@@ -8,6 +8,7 @@ function barrier() {
   
   this.gravity = 0.9;
   this.velocity = 0;
+  //this.points = 0;
   
   this.show = function() {
     fill(color('blue'));
@@ -23,6 +24,11 @@ function barrier() {
     if (this.x < 0) {
       this.x = w + 100;
       this.y = (Math.random() * h);
+      
+      this.velocity = 0; //reset velocity
+      
+      score++;
+      document.getElementById("scoreid").innerHTML = "Score: " + score;
     }
   }
   
