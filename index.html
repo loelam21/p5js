@@ -71,13 +71,14 @@
         <button id="hardButton" onclick="colorMe('white','white','#42f442'), mode(-2.5,100,250)">Hard</button>
       </div>
       <br>
-
+      
       <h2>Hit <strong onclick="toMobileGame()">ENTER</strong> to start.</h2>
-
+      
       <h3 id="warning"></h3>
-
+      <br>
+      
       <button onclick="toMobileGame()" id="mobileButton">Kokodesu.</button><!--secret button for mobile testing-->
-
+      
       <script>
         function colorMe(easy,medium,hard) { //button colors to indicate selected mode
           document.getElementById('easyButton').style.borderColor = easy;
