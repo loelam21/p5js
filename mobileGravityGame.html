@@ -35,7 +35,7 @@
         text-shadow: 4px 8px 2px red;
         font-family: 'Staatliches', cursive;
         position: fixed;
-        top: 50%;
+        top: 40%;
         left: 50%;
         transform: translate(-50%, -50%);
       }
@@ -245,12 +245,12 @@
             lose.class("winlose"); //for style
 
             retry = createButton("Retry");
-            retry.position(w * 0.30,h * 0.7);
+            retry.position(w * 0.1,h * 0.7);
             retry.class("retry");
             retry.mousePressed(replay); //refresh page
 
             mainMenu = createButton("Main Menu");
-            mainMenu.position(w * 0.64,h * 0.7)
+            mainMenu.position(w * 0.34,h * 0.7)
             mainMenu.class("mainMenu");
             mainMenu.mousePressed(homePage); //goes to home page
           }
