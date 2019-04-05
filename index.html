@@ -15,7 +15,7 @@
       }
       #name {
         font-size: 5em;
-        margin-top: 6.5%;
+        margin-top: 4%;
         font-family: 'Staatliches', cursive;
       }
       #instructDiv {
@@ -72,7 +72,7 @@
       </div>
       <br>
 
-      <h2>Press any key to start.</h2>
+      <h2>Hit <strong onclick="toMobileGame()">enter</strong> to start.</h2>
 
       <h3 id="warning"></h3>
 
@@ -84,30 +84,38 @@
           document.getElementById('mediumButton').style.borderColor = medium;
           document.getElementById('hardButton').style.borderColor = hard;
         }
-
+        
         var chosen = false;
         var clicked = 0;
-
+        
         function mode(speed,minTime,maxTime) { //save difficulty to LS
           localStorage.setItem("mode",speed);
           localStorage.setItem("min",minTime);
           localStorage.setItem("max",maxTime);
           chosen = true;
         }
-
-        function draw() {
+        
+        document.onkeypress = function(event) {
+          if ((event.keyCode == 13) && (chosen === true)) { //if player hit enter and picked a mode
+            location.href="gravity.html";
+          }
+          else if ((event.keyCode == 13) && (chosen === false)) { //if player hit enter and didn't pick a mode
+            document.getElementById('warning').innerHTML = "Choose a difficulty please!";
+          }
+        }
+        /*function draw() {
           if ((keyIsPressed === true) && (chosen === true)) { //|| ((mouseIsPressed) && (chosen === true))) {
             location.href="gravity.html";
           }
           else if ((keyIsPressed === true) && (chosen === false)) { //|| ((clicked > 1) && (chosen === false))) {
             document.getElementById('warning').innerHTML = "Choose a difficulty please!";
           }
-        }
+        }*/
         
-        function mouseClicked() { //makes sure warning only appears if mouse is clicked 2 or more times
+        /*function mouseClicked() { //makes sure warning only appears if mouse is clicked 2 or more times
           clicked++;
-        }
-
+        }*/
+        
         function toMobileGame() { //go to mobile game
           location.href="mobileGravityGame.html";
         }
