@@ -40,7 +40,14 @@
         transform: translate(-50%, -50%);
       }
       #win {
+        font-size: 9em;
+        color: white;
         text-shadow: 4px 8px 2px rgb(26, 153, 26);
+        font-family: 'Staatliches', cursive;
+        position: fixed;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
       .retry {
         width: 300px;
@@ -90,11 +97,11 @@
 
       var preventDefaultTF = false;
       
-      //var music;
+      var music;
       var deathSound;
       
       function preload() {
-        //music = loadSound("epicBGmusic.ogg"); //can't load ogg files on iOS?
+        music = loadSound("epicBGmusic.ogg"); //can't load ogg files on iOS?
         deathSound = loadSound("sadTrombone.mp3");
       }
 
@@ -106,7 +113,7 @@
 
         createCanvas(w,h);
 
-        //music.play();
+        music.play();
         
         setInterval(function () { //counts seconds elapsed
           seconds++;
@@ -238,7 +245,7 @@
           obstacleHit = collideRectCircle(this.x,this.y,randWidth,randHeight,jumper.x,jumper.y,50); //check if colliding
           if (obstacleHit) {
             preventDefaultTF = true;
-            //music.stop();
+            music.stop();
             deathSound.play();
             noLoop();
             lose = createDiv("YOU LOSE!");
@@ -291,12 +298,12 @@
             win.id("win"); //for style
 
             retry = createButton("Play Again");
-            retry.position(w * 0.30,h * 0.7);
+            retry.position(w * 0.1,h * 0.7);
             retry.class("retry"); //for style
             retry.mousePressed(replay); //refresh page
 
             mainMenu = createButton("Main Menu");
-            mainMenu.position(w * 0.64,h * 0.7)
+            mainMenu.position(w * 0.6,h * 0.7)
             mainMenu.class("mainMenu"); //for style
             mainMenu.mousePressed(homePage); //goes to home page
           }

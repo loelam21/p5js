@@ -29,29 +29,9 @@
       #warning {
         color: red;
       }
-      #mobileButton {
-        color: black;
-        background-color: black;
-        border-color: black;
-        position: fixed; /*positioned relative to the viewport; stays in same place even if page scrolls */
-        top: 0;
-        left: 0;
-      }
     </style>
   </head>
   <body>
-      <!--<h1 id="name">Name</h1>
-      <h2>How to Play/Rules/Instructions: </h2>
-      <div id="instructDiv">
-        <ul>
-          <li>Devil chases the red circle.</li>
-          <li>Squares are powerups. Blue = Growth. Red = Speed.</li>
-          <li>Devil may only eat the blue square. Red Circle may only eat the red square.</li>
-        </ul>
-      </div>
-      <button onclick="toGame()">To Game</button> <--change button into spacebar instead-->
-
-
       <h1 id="name">Gravity Game</h1>
 
       <h2>How To Play:</h2>
@@ -72,12 +52,10 @@
       </div>
       <br>
       
-      <h2>Hit <strong onclick="toMobileGame()">ENTER</strong> to start.</h2>
+      <h2 onclick="toMobileGame()">Hit ENTER to start.</h2>
       
       <h3 id="warning"></h3>
       <br>
-      
-      <button onclick="toMobileGame()" id="mobileButton">Kokodesu.</button><!--secret button for mobile testing-->
       
       <script>
         function colorMe(easy,medium,hard) { //button colors to indicate selected mode
@@ -104,18 +82,6 @@
             document.getElementById('warning').innerHTML = "Choose a difficulty please!";
           }
         }
-        /*function draw() {
-          if ((keyIsPressed === true) && (chosen === true)) { //|| ((mouseIsPressed) && (chosen === true))) {
-            location.href="gravity.html";
-          }
-          else if ((keyIsPressed === true) && (chosen === false)) { //|| ((clicked > 1) && (chosen === false))) {
-            document.getElementById('warning').innerHTML = "Choose a difficulty please!";
-          }
-        }*/
-        
-        /*function mouseClicked() { //makes sure warning only appears if mouse is clicked 2 or more times
-          clicked++;
-        }*/
         
         function toMobileGame() { //go to mobile game
           location.href="mobileGravityGame.html";
