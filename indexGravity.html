@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <title>Gravity Game</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"> <!--Makes site look good on all devices-->
+    <link href="https://fonts.googleapis.com/css?family=Staatliches|Source+Sans+Pro" rel="stylesheet">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-family: 'Source Sans Pro', sans-serif;
+        background-color: black;
+        color: white;
+      }
+      #name {
+        font-size: 5em;
+        margin-top: 4%;
+        font-family: 'Staatliches', cursive;
+      }
+      #instructDiv {
+        width: 50%;
+        margin: auto;
+        line-height: 0.5;
+      }
+      button {
+        font-family: 'Source Sans Pro', sans-serif;
+      }
+      #warning {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+      <h1 id="name">Gravity Game</h1>
+
+      <h2>How To Play:</h2>
+      <div id="instructDiv">
+        <p>- You are the red circle.</p>
+        <p>- Hit spacebar to jump.</p>
+        <p>- Avoid the blue rectangles.</p>
+        <p>- Reach the goal to win!</p>
+      </div>
+      <br>
+      <br>
+
+      <h2>Choose a Difficulty:</h2>
+      <div>
+        <button id="easyButton" onclick="colorMe('#42f442','white','white'), mode(-1.2,250,500)">Easy</button>
+        <button id="mediumButton" onclick="colorMe('white','#42f442','white'), mode(-1.7,130,300)">Medium</button>
+        <button id="hardButton" onclick="colorMe('white','white','#42f442'), mode(-2.5,100,250)">Hard</button>
+      </div>
+      <br>
+      
+      <h2 onclick="toMobileGame()">Hit ENTER to start.</h2>
+      
+      <h3 id="warning"></h3>
+      <br>
+      
+      <script>
+        function colorMe(easy,medium,hard) { //button colors to indicate selected mode
+          document.getElementById('easyButton').style.borderColor = easy;
+          document.getElementById('mediumButton').style.borderColor = medium;
+          document.getElementById('hardButton').style.borderColor = hard;
+        }
+        
+        var chosen = false;
+        var clicked = 0;
+        
+        function mode(speed,minTime,maxTime) { //save difficulty to LS
+          localStorage.setItem("mode",speed);
+          localStorage.setItem("min",minTime);
+          localStorage.setItem("max",maxTime);
+          chosen = true;
+        }
+        
+        document.onkeypress = function(event) {
+          if ((event.keyCode == 13) && (chosen === true)) { //if player hit enter and picked a mode
+            location.href="gravity.html";
+          }
+          else if ((event.keyCode == 13) && (chosen === false)) { //if player hit enter and didn't pick a mode
+            document.getElementById('warning').innerHTML = "Choose a difficulty please!";
+          }
+        }
+        
+        function toMobileGame() { //go to mobile game
+          location.href="mobileGravityGame.html";
+        }
+      </script>
+  </body>
+</html>

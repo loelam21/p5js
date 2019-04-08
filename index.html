@@ -1,8 +1,7 @@
 <html>
   <head>
-    <title>Gravity Game</title>
+    <title>Gravity Game 2.0</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0"> <!--Makes site look good on all devices-->
-    <script src="p5/p5.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Staatliches|Source+Sans+Pro" rel="stylesheet">
     <style>
       body {
@@ -32,14 +31,16 @@
     </style>
   </head>
   <body>
-      <h1 id="name">Gravity Game</h1>
+      <h1 id="name">Gravity Game 2.0</h1>
 
       <h2>How To Play:</h2>
       <div id="instructDiv">
         <p>- You are the red circle.</p>
         <p>- Hit spacebar to jump.</p>
+        <p>- "a" to move left. "d" to move right.</p>
         <p>- Avoid the blue rectangles.</p>
-        <p>- Reach the goal to win!</p>
+        <p>- Gain points when rectangles go offscreen.</p>
+        <p>- Have fun!</p>
       </div>
       <br>
       <br>
@@ -76,16 +77,16 @@
         
         document.onkeypress = function(event) {
           if ((event.keyCode == 13) && (chosen === true)) { //if player hit enter and picked a mode
-            location.href="gravity.html";
+            location.href="sidescroller.html";
           }
           else if ((event.keyCode == 13) && (chosen === false)) { //if player hit enter and didn't pick a mode
             document.getElementById('warning').innerHTML = "Choose a difficulty please!";
           }
         }
         
-        function toMobileGame() { //go to mobile game
+        /*function toMobileGame() { //go to mobile game
           location.href="mobileGravityGame.html";
-        }
+        }*/
       </script>
   </body>
 </html>

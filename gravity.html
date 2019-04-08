@@ -92,7 +92,7 @@
       var deathSound;
       
       function preload() {
-        music = loadSound("epicBGmusic.ogg");
+        music = loadSound("epicBGmusic.mp3");
         deathSound = loadSound("sadTrombone.mp3");
       }
 
@@ -106,7 +106,7 @@
 
         music.play();
         
-        setInterval(function () { //counts seconds elapsed 
+        setInterval(function () { //counts seconds elapsed
           seconds++;
         }, 1000);
         
@@ -238,6 +238,7 @@
             music.stop();
             deathSound.play();
             noLoop();
+
             lose = createDiv("YOU LOSE!");
             lose.class("winlose"); //for style
 
@@ -303,7 +304,7 @@
         window.location.reload();
       }
       function homePage() {
-        location.href="index.html";
+        location.href="indexGravity.html";
       }
 
       function keyPressed() {

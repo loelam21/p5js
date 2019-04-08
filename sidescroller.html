@@ -1,0 +1,139 @@
+<html>
+  <head>
+    <title>Gravity Game 2.0</title>
+    <script src="p5/p5.min.js"></script>
+    <script src="p5.collide2D-master/p5.collide2d.min.js"></script>
+    <script language="javascript" type="text/javascript" src="p5/addons/p5.dom.min.js"></script>
+    <script language="javascript" type="text/javascript" src="p5/addons/p5.sound.min.js"></script>
+
+    <script src="jumper.js"></script>
+    <script src="barrier.js"></script>
+    <script src="ground.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css?family=Staatliches|Source+Sans+Pro" rel="stylesheet">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      #scoreid {
+        color: white;
+        font-size: 3.5em;
+        font-family: 'Staatliches', cursive;
+      }
+      #lose {
+        font-size: 10vw;
+        color: white;
+        text-shadow: 4px 8px 2px red;
+        font-family: 'Staatliches', cursive;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      #retry {
+        width: 100px;
+        height: 40px;
+        font-size: 20px;
+        font-family: 'Staatliches', cursive;
+      }
+      #mainMenu {
+        width: 100px;
+        height: 40px;
+        font-size: 20px;
+        font-family: 'Staatliches', cursive;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      
+      var jumper = new Jumper();
+      var barrierArr = []; //stores barriers
+      var barrierCount = 0; //amount of barriers spawned
+      function delayBarrier() { //this function replaces the for loop
+        setTimeout(function() {
+          var randWidth = random(30,75); //barrier's width
+          var randHeight = random(30,75); //barrier's height
+          barrierArr.push(new Barrier(randWidth,randHeight)); //make a new barrier
+          barrierCount++; //update barrier count
+          if (barrierCount < 12) { //if there's less than 12 barriers...
+            delayBarrier(); //re-run the function to create a new barrier
+          }
+        }, 350); //wait 350ms before creating another barrier
+      }
+      delayBarrier(); //call function for the first time
+      var ground = new Ground();
+      
+      var hitObstacle = false;
+      var onGround = false;
+      
+      var scoreDiv;
+      var score = 0;
+      var lose;
+      var retry;
+      var mainMenu;
+
+      var backgroundImg;
+      var playerImg;
+
+      var music;
+      var deathSound;
+      
+      function preload() {
+        backgroundImg = loadImage("background.jpg");
+        //backgroundImg.resize(w,h);
+        playerImg = loadImage("player.png");
+        music = loadSound("epicBGmusic.mp3");
+        deathSound = loadSound("sadTrombone.mp3");
+      }
+
+      function setup() {
+        createCanvas(w,h);
+
+        backgroundImg.width = w;
+        backgroundImg.height = h;
+
+        music.play();
+
+        scoreDiv = createDiv("Score: 0");
+        scoreDiv.id("scoreid");
+        scoreDiv.position(10,0);
+      }
+      
+      function draw() {
+        background(100);//background(backgroundImg); // background(0)
+        noStroke();
+
+        jumper.show();
+        jumper.update();
+
+        for (var i = 0; i < barrierArr.length; i++) { //run the functions for the barriers
+          barrierArr[i].show();
+          barrierArr[i].update();
+          barrierArr[i].collide();
+        }
+
+        ground.show();
+        ground.collide();
+        
+      }
+      
+      function replay() { //using a function to prevent auto reload
+        window.location.reload();
+      }
+      function homePage() {
+        location.href="index.html";
+      }
+
+      function keyPressed() {
+        if (keyCode == 32) { //spacebar key
+          jumper.up();
+        }
+      }
+    </script>
+  </body>
+</html>
