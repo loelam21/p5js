@@ -1,6 +1,6 @@
 function Barrier(randWidth,randHeight) {
   //randomly flies in from right to left
-  this.x = w + ((Math.random() * 400) + 100); //spawns 100 to 500 pixels offscreen
+  this.x = w + 150; //((Math.random() * 400) + 100); //spawns 100 to 500 pixels offscreen
   this.y = (Math.random() * (h - 165)); //don't spawn in the ground
 
   this.width = randWidth;//50;
@@ -21,7 +21,7 @@ function Barrier(randWidth,randHeight) {
     
     //make barriers keep coming
     if (this.x < (0 - this.width)) { //if barrier goes offscreen...
-      this.x = w + ((Math.random() * 400) + 100); //spawns 100 to 500 pixels offscreen
+      this.x = w + 150; //((Math.random() * 400) + 100); //spawns 100 to 500 pixels offscreen
       this.y = (Math.random() * (h - 170)); //don't spawn in the ground
       randWidth = random(30,75);
       randHeight = random(30,75);
@@ -30,6 +30,11 @@ function Barrier(randWidth,randHeight) {
       
       score++;
       document.getElementById("scoreid").innerHTML = "Score: " + score;
+    }
+    
+    //increase speed of barriers every 50 barriers
+    if (score == 50) {
+      this.gravity = 1.8;
     }
   }
   
