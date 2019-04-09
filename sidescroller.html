@@ -67,7 +67,7 @@
           }
         }, randDelay); //wait some time before creating another barrier
       }
-      delayBarrier(); //call function for the first time
+      //delayBarrier(); //call function for the first time
       var ground = new Ground();
       
       var hitObstacle = false;
@@ -98,7 +98,9 @@
 
         backgroundImg.width = w;
         backgroundImg.height = h;
-
+        
+        delayBarrier(); //call function for the first time
+        
         music.play();
 
         scoreDiv = createDiv("Score: 0");
