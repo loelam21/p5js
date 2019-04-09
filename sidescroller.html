@@ -54,7 +54,7 @@
       var jumper = new Jumper();
       var barrierArr = []; //stores barriers
       var barrierCount = 0; //amount of barriers spawned
-      var randDelay = 500; //350
+      var randDelay = 200;
       function delayBarrier() { //this function replaces the for loop
         randDelay = Math.floor((Math.random() * 150) + 350); //change delay time
         setTimeout(function() {
@@ -67,7 +67,7 @@
           }
         }, randDelay); //wait some time before creating another barrier
       }
-      //delayBarrier(); //call function for the first time
+        
       var ground = new Ground();
       
       var hitObstacle = false;
