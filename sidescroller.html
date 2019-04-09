@@ -54,16 +54,18 @@
       var jumper = new Jumper();
       var barrierArr = []; //stores barriers
       var barrierCount = 0; //amount of barriers spawned
+      var randDelay = 200;
       function delayBarrier() { //this function replaces the for loop
+        randDelay = Math.floor((Math.random() * 800) + 350); //change delay time
         setTimeout(function() {
           var randWidth = random(30,75); //barrier's width
           var randHeight = random(30,75); //barrier's height
           barrierArr.push(new Barrier(randWidth,randHeight)); //make a new barrier
           barrierCount++; //update barrier count
-          if (barrierCount < 12) { //if there's less than 12 barriers...
+          if (barrierCount < 3) { //if there's less than 3 barriers...
             delayBarrier(); //re-run the function to create a new barrier
           }
-        }, 350); //wait 350ms before creating another barrier
+        }, randDelay); //wait some time before creating another barrier
       }
       delayBarrier(); //call function for the first time
       var ground = new Ground();
