@@ -16,6 +16,10 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
+        
+        /*background-image: url('background.jpg');
+        background-size: cover;
+        z-index: -1; try experiement wiht this*/
       }
       #scoreid {
         color: white;
@@ -87,7 +91,7 @@
       
       function preload() {
         backgroundImg = loadImage("background.jpg");
-        //backgroundImg.resize(w,h);
+        backgroundImg.resize(w,h);
         playerImg = loadImage("player.png");
         music = loadSound("epicBGmusic.mp3");
         deathSound = loadSound("sadTrombone.mp3");
@@ -96,8 +100,8 @@
       function setup() {
         createCanvas(w,h);
 
-        backgroundImg.width = w;
-        backgroundImg.height = h;
+        //backgroundImg.width = w;
+        //backgroundImg.height = h;
         
         delayBarrier(); //call function for the first time
         
@@ -109,7 +113,7 @@
       }
       
       function draw() {
-        background(100);//background(backgroundImg); // background(0)
+        background(backgroundImg);//background(100);// //MAKE TRANSLUCENT & bg image stays with bg's z-indexing being -1
         noStroke();
 
         jumper.show();
