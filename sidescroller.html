@@ -9,6 +9,7 @@
     <script src="jumper.js"></script>
     <script src="barrier.js"></script>
     <script src="ground.js"></script>
+    <script src="rocket.js"></script>
     
     <link href="https://fonts.googleapis.com/css?family=Staatliches|Source+Sans+Pro" rel="stylesheet">
     <style>
@@ -17,8 +18,8 @@
         padding: 0;
         overflow: hidden;
         
-        background-image: url('backgroundSpace.jpg');
-        background-size: contain;
+        background-image: url('backgroundGeometric.jpg'); /*backgroundSpace*/
+        background-size: cover;
         z-index: -1; 
       }
       #scoreid {
@@ -68,8 +69,8 @@
       function delayBarrier() { //this function replaces the for loop
         randDelay = Math.floor((Math.random() * 150) + 350); //change delay time
         setTimeout(function() {
-          var randWidth = random(30,75); //barrier's width
-          var randHeight = random(30,75); //barrier's height
+          var randWidth = 150;//random(30,75); //barrier's width
+          var randHeight = 150;//random(30,75); //barrier's height
           barrierArr.push(new Barrier(randWidth,randHeight)); //make a new barrier
           barrierCount++; //update barrier count
           if (barrierCount < 5) { //if there's less than 5 barriers...
@@ -78,10 +79,10 @@
         }, randDelay); //wait some time before creating another barrier
       }
         
-      var ground = new Ground();
+      //var ground = new Ground();
       
       var hitObstacle = false;
-      var onGround = false;
+      //var onGround = false;
       
       var scoreDiv;
       var score = 0;
@@ -91,19 +92,24 @@
 
       var speed;
 
-      var backgroundImg;
+      var rocket;
       var playerImgRight;
       var playerImgLeft;
+      var obstacleImg;
       var leftRight = "right"; //astronaut faces right by default
 
       var music;
       var deathSound;
       
       function preload() {
+        rocket = loadImage("rocket.png");
         playerImgRight = loadImage("astronautRight.png");
         playerImgLeft = loadImage("astronautLeft.png");
-        music = loadSound("epicBGmusic.mp3");
-        deathSound = loadSound("sadTrombone.mp3");
+        
+        obstacleImg = loadImage("asteroid.png");
+        
+        music = loadSound("bgMusicSpace.mp3"); /*epicBGmusic*/
+        deathSound = loadSound("sadTrombone.mp3"); 
       }
        
       function setup() {
@@ -135,8 +141,8 @@
           barrierArr[i].collide();
         }
 
-        ground.show();
-        ground.collide();
+        /*ground.show();
+        ground.collide();*/
         
       }
 

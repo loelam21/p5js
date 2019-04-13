@@ -1,6 +1,6 @@
 function Jumper() {
   this.x = 100;
-  this.y = 0;
+  this.y = 200; //0
 
   this.width = 80;
   this.height = 80;

@@ -11,7 +11,8 @@ function Barrier(randWidth,randHeight) {
 
   this.show = function() {
     fill(color('blue'));
-    rect(this.x,this.y,this.width,this.height);
+    image(obstacleImg,this.x,this.y,this.width,this.height); //astronaut looks right
+    /*rect(this.x,this.y,this.width,this.height);*/
   }
   
   this.update = function() {
