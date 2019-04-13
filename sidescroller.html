@@ -17,14 +17,20 @@
         padding: 0;
         overflow: hidden;
         
-        /*background-image: url('background.jpg');
-        background-size: cover;
-        z-index: -1; try experiement wiht this*/
+        background-image: url('backgroundSpace.jpg');
+        background-size: contain;
+        z-index: -1; 
       }
       #scoreid {
         color: white;
         font-size: 3.5em;
         font-family: 'Staatliches', cursive;
+      }
+      #speedID {
+        color: white;
+        font-size: 3.5em;
+        font-family: 'Staatliches', cursive;
+        
       }
       #lose {
         font-size: 10vw;
@@ -83,25 +89,25 @@
       var retry;
       var mainMenu;
 
+      var speed;
+
       var backgroundImg;
-      var playerImg;
+      var playerImgRight;
+      var playerImgLeft;
+      var leftRight = "right"; //astronaut faces right by default
 
       var music;
       var deathSound;
       
       function preload() {
-        backgroundImg = loadImage("background.jpg");
-        backgroundImg.resize(w,h);
-        playerImg = loadImage("player.png");
+        playerImgRight = loadImage("astronautRight.png");
+        playerImgLeft = loadImage("astronautLeft.png");
         music = loadSound("epicBGmusic.mp3");
         deathSound = loadSound("sadTrombone.mp3");
       }
-
+       
       function setup() {
         createCanvas(w,h);
-
-        //backgroundImg.width = w;
-        //backgroundImg.height = h;
         
         delayBarrier(); //call function for the first time
         
@@ -110,10 +116,14 @@
         scoreDiv = createDiv("Score: 0");
         scoreDiv.id("scoreid");
         scoreDiv.position(10,0);
+
+        speed = createDiv();
+        speed.position((w/2)-110,0);
+        speed.id("speedID");
       }
       
       function draw() {
-        background(backgroundImg);//background(100);// //MAKE TRANSLUCENT & bg image stays with bg's z-indexing being -1
+        clear(); //clears the background
         noStroke();
 
         jumper.show();
@@ -129,6 +139,13 @@
         ground.collide();
         
       }
+
+      function speedText() {
+        document.getElementById('speedID').innerHTML = "Speed Up!";
+        setTimeout(function() {
+          document.getElementById('speedID').innerHTML = "";
+        }, 2000);
+      }
       
       function replay() { //using a function to prevent auto reload
         window.location.reload();
@@ -140,6 +157,9 @@
       function keyPressed() {
         if (keyCode == 32) { //spacebar key
           jumper.up();
+        }
+        if (keyCode == 82) { //r key
+          replay(); //refresh page
         }
       }
     </script>

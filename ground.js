@@ -11,7 +11,7 @@ function Ground() {
   }
 
   this.collide = function() {
-    onGround = collideRectCircle(this.x,this.y,this.width,this.height,jumper.x,jumper.y,jumper.radius); //check if on the ground
+    onGround = collideRectRect(this.x,this.y,this.width,this.height,jumper.x,jumper.y,jumper.width,jumper.height); //check if on the ground
     if (onGround) {
       jumper.velocity = -10; //-10 to bounce on floor
     }

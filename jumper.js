@@ -2,7 +2,8 @@ function Jumper() {
   this.x = 100;
   this.y = 0;
 
-  this.radius = 50;
+  this.width = 80;
+  this.height = 80;
   
   this.gravity = 0.5; //the force of gravity
   this.lift = -10; //opposing force
@@ -10,9 +11,14 @@ function Jumper() {
   
   this.show = function() {
     /*fill(color('red'));
-    ellipse(this.x,this.y,this.radius,this.radius);*/
-    imageMode(CENTER);
-    image(playerImg,this.x,this.y,this.radius,this.radius); //change detection collision to be btwn rect and rect; change radius to width and height
+    rect(this.x,this.y,this.width,this.height);
+    imageMode(CORNER);*/
+    if (leftRight == "right") {
+      image(playerImgRight,this.x,this.y,this.width,this.height); //astronaut looks right
+    }
+    else if (leftRight == "left") {
+      image(playerImgLeft,this.x,this.y,this.width,this.height); //astronaut looks left
+    }
   }
   this.up = function() {
     this.velocity += this.lift;
@@ -34,9 +40,11 @@ function Jumper() {
     
     if ((keyIsDown(65)) && (this.x > 25)) { //a key
       this.x -= 10; //move jumper left
+      leftRight = "left"; //astronaut looks left
     }
     if (keyIsDown(68) && (this.x < w - 25)) { //d key
       this.x += 10; //move jumper right
+      leftRight = "right"; //astronaut looks right
     }
   }
   
