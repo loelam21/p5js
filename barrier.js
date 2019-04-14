@@ -5,7 +5,7 @@ function Barrier(randWidth,randHeight) {
 
   this.width = randWidth; //100
   this.height = randHeight; //100
-  this.radius = 50;
+  this.radius = 60;
   
   this.gravity = 1.5;
   this.velocity = 0;
@@ -71,6 +71,16 @@ function Barrier(randWidth,randHeight) {
       noLoop();
       music.stop();
       deathSound.play();
+
+      /*highestScore = localStorage.getItem("highestScore"); //see what the highest was
+      if (score > highestScore) { //if score is larger that the highest...
+        localStorage.setItem("highestScore",score); //save new highest to LS
+        
+        console.log(score);
+        newHighest = createP("New High Score!");
+        newHighest.position(w/2,h/2);
+        newHighest.id("newHighest");
+      }*/
 
       lose = createDiv("YOU DIED!");
       lose.id("lose"); //for style
