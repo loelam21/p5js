@@ -1,6 +1,6 @@
 function Jumper() {
   this.x = 100;
-  this.y = 200; //0
+  this.y = 400;
 
   this.width = 80;
   this.height = 80;
@@ -47,5 +47,5 @@ function Jumper() {
       leftRight = "right"; //astronaut looks right
     }
   }
-  
+
 }

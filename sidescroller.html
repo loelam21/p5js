@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Gravity Game 2.0</title>
+    <title>Mission: Survive</title>
     <script src="p5/p5.min.js"></script>
     <script src="p5.collide2D-master/p5.collide2d.min.js"></script>
     <script language="javascript" type="text/javascript" src="p5/addons/p5.dom.min.js"></script>
@@ -65,21 +65,22 @@
       var jumper = new Jumper();
       var barrierArr = []; //stores barriers
       var barrierCount = 0; //amount of barriers spawned
-      var randDelay = 200;
+      var randDelay = 200; //first one spawns @ 200ms
       function delayBarrier() { //this function replaces the for loop
-        randDelay = Math.floor((Math.random() * 150) + 350); //change delay time
+        randDelay = Math.floor((Math.random() * 150) + 450); //change delay time
         setTimeout(function() {
           var randWidth = 100;//random(30,75); //barrier's width
           var randHeight = 100;//random(30,75); //barrier's height
           barrierArr.push(new Barrier(randWidth,randHeight)); //make a new barrier
           barrierCount++; //update barrier count
-          if (barrierCount < 5) { //if there's less than 5 barriers...
+          if (barrierCount < 6) { //if there's less than 6 barriers...
             delayBarrier(); //re-run the function to create a new barrier
           }
         }, randDelay); //wait some time before creating another barrier
       }
         
       //var ground = new Ground();
+      var rocket = new Rocket();
       
       var hitObstacle = false;
       //var onGround = false;
@@ -92,7 +93,7 @@
 
       var speed;
 
-      var rocket;
+      var rocketImg;
       var playerImgRight;
       var playerImgLeft;
       var obstacleImg;
@@ -104,7 +105,7 @@
       var floorBounce = h - 100;
       
       function preload() {
-        rocket = loadImage("rocket.png");
+        rocketImg = loadImage("rocket.png");
         playerImgRight = loadImage("astronautRight.png");
         playerImgLeft = loadImage("astronautLeft.png");
         
@@ -145,6 +146,10 @@
 
         /*ground.show();
         ground.collide();*/
+        rocket.show();
+        rocket.move();
+
+        //console.log(rocket.x);
         
       }
 
