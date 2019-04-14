@@ -1,18 +1,22 @@
 function Barrier(randWidth,randHeight) {
   //randomly flies in from right to left
   this.x = w + 150; //spawns 100 to 500 pixels offscreen
-  this.y = (Math.random() * (h - 120)); //don't spawn in the ground 160
+  this.y = (Math.random() * (h - 100)); //don't spawn in the ground 160
 
-  this.width = randWidth;//50;
-  this.height = randHeight;//50;
+  this.width = randWidth; //100
+  this.height = randHeight; //100
+  this.radius = 50;
   
   this.gravity = 1.5;
   this.velocity = 0;
-
+  
   this.show = function() {
-    fill(color('blue'));
+    /*fill(color('blue'));
+    ellipse(this.x,this.y,this.radius,this.radius);*/
+    push();
+    imageMode(CENTER);
     image(obstacleImg,this.x,this.y,this.width,this.height); //astronaut looks right
-    /*rect(this.x,this.y,this.width,this.height);*/
+    pop();
   }
   
   this.update = function() {
@@ -23,7 +27,7 @@ function Barrier(randWidth,randHeight) {
     //make barriers keep coming
     if (this.x < (0 - this.width)) { //if barrier goes offscreen...
       this.x = w + 150; //spawns 100 to 500 pixels offscreen
-      this.y = (Math.random() * (h - 120)); //don't spawn in the ground
+      this.y = (Math.random() * (h - 100)); //don't spawn in the ground
       randWidth = random(30,75);
       randHeight = random(30,75);
 
@@ -62,7 +66,7 @@ function Barrier(randWidth,randHeight) {
   }
   
   this.collide = function() {
-    hitObstacle = collideRectRect(this.x,this.y,this.height,this.height,jumper.x,jumper.y,jumper.width,jumper.height);//collideRectCircle(this.x,this.y,this.height,this.height,jumper.x,jumper.y,jumper.radius); //check if colliding
+    hitObstacle = collideRectCircle(jumper.x,jumper.y,jumper.width,jumper.height,this.x,this.y,this.radius); //check if colliding //collideRectRect(this.x,this.y,this.height,this.height,jumper.x,jumper.y,jumper.width,jumper.height);
     if (hitObstacle) {
       noLoop();
       music.stop();

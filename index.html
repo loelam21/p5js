@@ -36,7 +36,7 @@
       <h2>How To Play:</h2>
       <div id="instructDiv">
         <p>- You are an astronaut.</p>
-        <p>- Hit spacebar to jump.</p>
+        <p>- Hit spacebar to float up.</p>
         <p>- "a" to move left. "d" to move right.</p>
         <p>- Avoid the asteroids.</p>
         <p>- Gain points when asteroids go offscreen.</p>
@@ -46,13 +46,13 @@
       <br>
       <br>
 
-      <h2>Choose a Difficulty:</h2>
+      <!--<h2>Choose a Difficulty:</h2>
       <div>
         <button id="easyButton" onclick="colorMe('#42f442','white','white'), mode(-1.2,250,500)">Easy</button>
         <button id="mediumButton" onclick="colorMe('white','#42f442','white'), mode(-1.7,130,300)">Medium</button>
         <button id="hardButton" onclick="colorMe('white','white','#42f442'), mode(-2.5,100,250)">Hard</button>
       </div>
-      <br>
+      <br>-->
       
       <h2 onclick="toMobileGame()">Hit ENTER to start.</h2>
       
@@ -60,7 +60,7 @@
       <br>
       
       <script>
-        function colorMe(easy,medium,hard) { //button colors to indicate selected mode
+        /*function colorMe(easy,medium,hard) { //button colors to indicate selected mode
           document.getElementById('easyButton').style.borderColor = easy;
           document.getElementById('mediumButton').style.borderColor = medium;
           document.getElementById('hardButton').style.borderColor = hard;
@@ -82,6 +82,12 @@
           }
           else if ((event.keyCode == 13) && (chosen === false)) { //if player hit enter and didn't pick a mode
             document.getElementById('warning').innerHTML = "Choose a difficulty please!";
+          }
+        }*/
+
+        document.onkeypress = function(event) { //runs every time a key is pressed
+          if (event.keyCode == 13) { //if player key is enter...
+            location.href="sidescroller.html"; //go to game
           }
         }
         
