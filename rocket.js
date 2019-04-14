@@ -10,6 +10,6 @@ function Rocket() {
     }
 
     this.move = function() {
-        this.y -= 12; //move up offscreen
+        this.y -= 10; //move up offscreen
     }
 }
