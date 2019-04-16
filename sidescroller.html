@@ -125,7 +125,6 @@
       var rocketImg;
       var playerImgRight;
       var playerImgLeft;
-      var disintegrate;
       var obstacleImg;
       var leftRight = "right"; //astronaut faces right by default
 
@@ -138,7 +137,6 @@
         rocketImg = loadImage("rocket.png");
         playerImgRight = loadImage("astronautRight.png");
         playerImgLeft = loadImage("astronautLeft.png");
-        disintegrate = loadImage("disintegrate.gif");
         
         obstacleImg = loadImage("asteroid.png");
         
@@ -149,7 +147,7 @@
       function setup() {
         var rmveLoading = document.getElementById('loadingScreen');
         document.body.removeChild(rmveLoading);
-        
+
         createCanvas(w,h);
         
         delayBarrier(); //call function for the first time
