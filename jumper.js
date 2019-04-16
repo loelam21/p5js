@@ -29,8 +29,8 @@ function Jumper() {
     this.velocity *= 0.9; //air resistance
     
     //Prevent jumper from leaving the screen
-    if (this.y > h) { //stop on floor
-      this.y = h;
+    if (this.y > floorBounce) { //stop on floor
+      this.y = floorBounce;
       this.velocity = -10; //-10 to bounce on floor
     }
     if (this.y < 0) { //stop on ceiling

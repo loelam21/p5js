@@ -68,6 +68,11 @@ function Barrier(randWidth,randHeight) {
   this.collide = function() {
     hitObstacle = collideRectCircle(jumper.x,jumper.y,jumper.width,jumper.height,this.x,this.y,this.radius); //check if colliding //collideRectRect(this.x,this.y,this.height,this.height,jumper.x,jumper.y,jumper.width,jumper.height);
     if (hitObstacle) {
+      /*clear();
+      image(playerImgLeft,jumper.x,jumper.y,jumper.width,jumper.height); //replace astronaut with dead one
+      setTimeout(function() {
+        image(playerImgRight,jumper.x,jumper.y,jumper.width,jumper.height); //replace astronaut with dead one
+      }, 300);*/
       noLoop();
       music.stop();
       deathSound.play();
