@@ -8,7 +8,6 @@
 
     <script src="jumper.js"></script>
     <script src="barrier.js"></script>
-    <script src="ground.js"></script>
     <script src="rocket.js"></script>
     
     <link href="https://fonts.googleapis.com/css?family=Staatliches|Source+Sans+Pro" rel="stylesheet">
@@ -107,11 +106,9 @@
         }, randDelay); //wait some time before creating another barrier
       }
         
-      //var ground = new Ground();
       var rocket = new Rocket();
       
       var hitObstacle = false;
-      //var onGround = false;
       
       var scoreDiv;
       var score = 0;
@@ -176,13 +173,8 @@
           barrierArr[i].collide();
         }
 
-        /*ground.show();
-        ground.collide();*/
         rocket.show();
         rocket.move();
-
-        //console.log(rocket.x);
-        
       }
 
       function speedText() {
