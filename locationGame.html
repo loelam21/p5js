@@ -18,7 +18,6 @@
       function setup() {
         if (geoCheck() == true) {
           document.getElementById('locAvail').innerHTML = "Ready";
-          distance = calc(GeoDistance(mylat,mylon,treasurelat,treasurelon,'mi')); //position of user, position of treasure, unit of measurement
         }
         else {
           document.getElementById('locAvail').innerHTML = "Must have GPS enabled";
@@ -33,6 +32,7 @@
       function positionPing(position) { //the device's position
         mylat = position.latitude;
         mylon = position.longitude;
+        distance = calc(GeoDistance(mylat,mylon,treasurelat,treasurelon,'mi')); //position of user, position of treasure, unit of measurement
         document.getElementById('distance').innerHTML = distance;
       }
     </script>
