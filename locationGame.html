@@ -2,9 +2,14 @@
   <head>
     <script src="p5.min.js"></script>
     <script src="p5.geolocation.js"></script>
+    <style>
+      body {
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
-    <p id="locAvail"></p>
+    <h1 id="locAvail"></h1>
     <h1 id="distance"></h1>
     
     <script>
@@ -32,7 +37,7 @@
         mylon = position.longitude;
         distance = calcGeoDistance(mylat,mylon,treasurelat,treasurelon,'mi'); //position of user, position of treasure, unit of measurement
         $.getElementById('distance').innerHTML = "Your distance: " + distance.toFixed(5);
-        if (distance < 0.001) {
+        if (distance < 0.008) {
           $.getElementById('locAvail').innerHTML = "YOU FOUND THE TREASURE!";
         }
         else {
