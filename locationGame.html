@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <script src="p5/p5.min.js"></script>
+    <script src="p5/p5.geolocation.js"></script>
+  </head>
+  <body>
+    <p id="locAvail"></p>
+    <h1 id="distance"></h1>
+    
+    <script>
+      var distance;
+      var mylat;
+      var mylon;
+      
+      var treasurelat = 21.310222;
+      var treasurelon = -157.837545;
+      
+      function setup() {
+        if (geoCheck() == true) {
+          document.getElementById('locAvail').innerHTML = "Ready";
+          distance = calc(GeoDistance(mylat,mylon,treasurelat,treasurelon,'mi')); //position of user, position of treasure, unit of measurement
+        }
+        else {
+          document.getElementById('locAvail').innerHTML = "Must have GPS enabled";
+        }
+        intervalCurrentPosition(positionPing,1000); //ping the position every 1 second
+      }
+      
+      function draw() {
+        
+      }
+      
+      function positionPing(position) { //the device's position
+        mylat = position.latitude;
+        mylon = position.longitude;
+        document.getElementById('distance').innerHTML = distance;
+      }
+    </script>
+  </body>
+</html>
