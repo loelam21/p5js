@@ -4,9 +4,12 @@
   </head>
   <body>
     <h2 id="ax"></h2>
+    <h2 id="rx"></h2>
     <script>
       var ax; //acceleration x
       var axHigh = 0; //highest value of ax
+      
+      var rx; //rotation x
       
       function setup() {
         createCanvas(window.innerWidth,window.innerHeight);
@@ -18,6 +21,8 @@
           axHigh = ax;
           document.getElementById('ax').innerHTML = "X Acceleration: " + axHigh;
         }
+        rx = rotationX;
+        document.getElementById('rx').innerHTML = "X Rotation: " + rx;
         
       }
     </script>
