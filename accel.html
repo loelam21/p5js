@@ -6,6 +6,7 @@
     <h2 id="ax"></h2>
     <script>
       var ax; //acceleration x
+      var axHigh = 0; //highest value of ax
       
       function setup() {
         createCanvas(window.innerWidth,window.innerHeight);
@@ -13,7 +14,11 @@
       
       function draw() {
         ax = accelerationX;
-        document.getElementById('ax').innerHTML = "X Acceleration: " + ax;
+        if (ax > axHigh) {
+          axHigh = ax;
+          document.getElementById('ax').innerHTML = "X Acceleration: " + axHigh;
+        }
+        
       }
     </script>
   </body>
