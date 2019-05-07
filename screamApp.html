@@ -6,8 +6,9 @@
     <body>
         <h2 id="rx"></h2>
         <h2 id="ry"></h2>
+        <h2 id="rz"></h2>
 
-        <!--<h2 id="moved"></h2>-->
+        <h2 id="moved"></h2>
         <script>
             var defz;
             var defx;
@@ -40,8 +41,16 @@
                     document.getElementById('rz').innerHTML = "Z = " + rz;
                     document.getElementById('rx').innerHTML = "X = " + rx;
                     document.getElementById('ry').innerHTML = "Y = " + ry;
+
+                    document.getElementById('moved').innerHTML = "Moved";
                 }
                 
+                /*document.getElementById('rz').innerHTML = "Z = " + rz;
+                document.getElementById('rx').innerHTML = "X = " + rx;
+                document.getElementById('ry').innerHTML = "Y = " + ry;
+                document.getElementById('rz').innerHTML = "Z = " + rz;
+                document.getElementById('rx').innerHTML = "X = " + rx;
+                document.getElementById('ry').innerHTML = "Y = " + ry;*/
             }
             /*function deviceMoved() { //this func activates when the device is moved more than a threshold value
                 document.getElementById('moved').innerHTML = "Moved!";
