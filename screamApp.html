@@ -37,7 +37,7 @@
                 rz = rotationZ;
                 rx = rotationX;
                 ry = rotationY;
-                if ((rx + 5 < defx) || (rx - 5 > defx)) {
+                if ((rz + 5 < defz) || (rz - 5 > defz) || (rx + 5 < defx) || (rx - 5 > defx) || (ry + 5 < defy) || (ry - 5 > defy)) {
                     document.getElementById('rz').innerHTML = "Z = " + rz;
                     document.getElementById('rx').innerHTML = "X = " + rx;
                     document.getElementById('ry').innerHTML = "Y = " + ry;
