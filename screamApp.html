@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <script src="p5/p5.min.js"></script>
+    </head>
+    <body>
+        <h2 id="moved"></h2>
+        <script>
+            var ax; //acceleration x
+
+            function setup() {
+                createCanvas(window.innerWidth,window.innerHeight);
+            }
+            function draw() {
+
+            }
+            function deviceMoved() { //this func activates when the device is moved more than a threshold value
+                document.getElementById('moved').innerHTML = "Moved!";
+            }
+        </script>
+    </body>
+</html>
