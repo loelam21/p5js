@@ -37,16 +37,16 @@
                 rz = rotationZ;
                 rx = rotationX;
                 ry = rotationY;
-                //if ((rz + 5 < defz) || (rz - 5 > defz) || (rx + 5 < defx) || (rx - 5 > defx) || (ry + 5 < defy) || (ry - 5 > defy)) {
-                if ((rz < defz) || (rz > defz) || (rx < defx) || (rx > defx) || (ry < defy) || (ry > defy)) {
+                if ((rz + 5 < defz) || (rz - 5 > defz)) { //|| (rx + 5 < defx) || (rx - 5 > defx) || (ry + 5 < defy) || (ry - 5 > defy)) {
+                //if ((rz < defz) || (rz > defz) || (rx < defx) || (rx > defx) || (ry < defy) || (ry > defy)) {
                     document.getElementById('rz').innerHTML = "Z = " + rz;
                     document.getElementById('rx').innerHTML = "X = " + rx;
                     document.getElementById('ry').innerHTML = "Y = " + ry;
 
                     document.getElementById('moved').innerHTML = "Moved";
-                }
-                    
                 //}
+                    
+                }
                 
                 /*document.getElementById('rz').innerHTML = "Z = " + rz;
                 document.getElementById('rx').innerHTML = "X = " + rx;
