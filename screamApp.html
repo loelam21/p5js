@@ -6,13 +6,16 @@
     <body>
         <h2 id="rx"></h2>
         <h2 id="ry"></h2>
-        <h2 id="rz"></h2>
 
         <!--<h2 id="moved"></h2>-->
         <script>
-            var rz = 0;
-            var rx = 0;
-            var ry = 0;
+            var defz;
+            var defx;
+            var defy;
+            
+            var rz;
+            var rx;
+            var ry;
 
             /*var scream;
 
@@ -22,15 +25,23 @@
 
             function setup() {
                 createCanvas(window.innerWidth,window.innerHeight);
+
+                //store default values
+                defz = rotationZ;
+                defx = rotationX;
+                defy = rotationY;
             }
             
             function draw() {
-                rz = rotationZ; //must be in the order of z, x, y
+                rz = rotationZ;
                 rx = rotationX;
                 ry = rotationY;
-                document.getElementById('rx').innerHTML = "X = " + rx;
-                document.getElementById('ry').innerHTML = "Y = " + ry;
-                document.getElementById('rz').innerHTML = "Z = " + rz;
+                if ((rx + 5 < defx) || (rx - 5 > defx)) {
+                    document.getElementById('rz').innerHTML = "Z = " + rz;
+                    document.getElementById('rx').innerHTML = "X = " + rx;
+                    document.getElementById('ry').innerHTML = "Y = " + ry;
+                }
+                
             }
             /*function deviceMoved() { //this func activates when the device is moved more than a threshold value
                 document.getElementById('moved').innerHTML = "Moved!";
