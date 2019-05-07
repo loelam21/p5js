@@ -1,7 +1,7 @@
 <html>
     <head>
         <script src="p5/p5.min.js"></script>
-        <!--<script src="p5/addons/p5.sound.min.js"></script>-->
+        <script src="p5/addons/p5.sound.min.js"></script>
     </head>
     <body>
         <h2 id="rx"></h2>
@@ -18,11 +18,11 @@
             var rx;
             var ry;
 
-            /*var scream;
+            var scream;
 
             function preload() {
                 scream = loadSound('sadTrombone.mp3');
-            }*/
+            }
 
             function setup() {
                 createCanvas(window.innerWidth,window.innerHeight);
@@ -59,7 +59,7 @@
 
             function deviceMoved() { //this func activates when the device is moved more than a threshold value
                 document.getElementById('moved').innerHTML = "Moved!";
-                //scream.play();
+                scream.play();
             }
         </script>
     </body>
