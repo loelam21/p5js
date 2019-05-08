@@ -27,6 +27,10 @@
             var ry;*/
 
             var scream;
+            
+            function preload() {
+                scream = loadSound("scream.mp3");
+            }
 
             function setup() {
                 createCanvas(window.innerWidth,window.innerHeight);
@@ -76,10 +80,10 @@
                 scream.play();
             }
 
-            function mouseClicked() { //resolves AudioContext problem
+            /*function mouseClicked() { //resolves AudioContext problem
                 console.log("clicked");
                 scream = loadSound('scream.mp3');
-            }
+            }*/
         </script>
     </body>
 </html>
