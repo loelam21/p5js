@@ -4,25 +4,21 @@
         <script src="p5/addons/p5.sound.min.js"></script>
     </head>
     <body>
-        <h2 id="rx"></h2>
+        <!--<h2 id="rx"></h2>
         <h2 id="ry"></h2>
-        <h2 id="rz"></h2>
+        <h2 id="rz"></h2>-->
 
         <h2 id="moved"></h2>
         <script>
-            var defz;
+            /*var defz;
             var defx;
             var defy;
             
             var rz;
             var rx;
-            var ry;
+            var ry;*/
 
             var scream;
-
-            /*function preload() {
-                scream = loadSound('sadTrombone.mp3');
-            }*/
 
             function setup() {
                 createCanvas(window.innerWidth,window.innerHeight);
@@ -60,6 +56,7 @@
             document.addEventListener("click", function() {
                 window.alert("docu click");
                 console.log("docu click");
+                document.getElementById('moved').innerHTML = "docu clicked too";
                 scream = loadSound('sadTrombone.mp3');
             }); 
 
