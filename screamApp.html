@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="p5/p5.min.js"></script>
         <script src="p5/addons/p5.sound.min.js"></script>
     </head>
@@ -53,21 +54,20 @@
                 document.getElementById('ry').innerHTML = "Y = " + ry;
             }*/
             
-            document.addEventListener("click", function() {
+            /*document.addEventListener("click", function() {
                 window.alert("docu click");
                 console.log("docu click");
                 document.getElementById('moved').innerHTML = "docu clicked too";
                 scream = loadSound('sadTrombone.mp3');
-            }); 
+            }); */
 
             function deviceMoved() { //deviceMoved this func activates when the device is moved more than a threshold value
                 document.getElementById('moved').innerHTML = "Moved!";
                 scream.play();
-                console.log("moved device");
+                
             }
 
-            function mouseClicked() {
-                window.alert("clicked");
+            function mouseClicked() { //resolves AudioContext problem
                 console.log("clicked");
                 scream = loadSound('sadTrombone.mp3');
             }
