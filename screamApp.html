@@ -60,10 +60,11 @@
             function deviceMoved() { //deviceMoved this func activates when the device is moved more than a threshold value
                 document.getElementById('moved').innerHTML = "Moved!";
                 scream.play();
-                console.log("sound played");
+                console.log("moved device");
             }
 
             function mouseClicked() {
+                console.log("clicked");
                 scream = loadSound('sadTrombone.mp3');
             }
         </script>
