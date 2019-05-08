@@ -57,10 +57,10 @@
                 document.getElementById('ry').innerHTML = "Y = " + ry;
             }*/
             
-            document.onclick = function() {
+            document.addEventListener("click", function() {
                 console.log("docu click");
                 scream = loadSound('sadTrombone.mp3');
-            }
+            }); 
 
             function deviceMoved() { //deviceMoved this func activates when the device is moved more than a threshold value
                 document.getElementById('moved').innerHTML = "Moved!";
