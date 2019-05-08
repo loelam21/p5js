@@ -20,9 +20,9 @@
 
             var scream;
 
-            function preload() {
+            /*function preload() {
                 scream = loadSound('sadTrombone.mp3');
-            }
+            }*/
 
             function setup() {
                 createCanvas(window.innerWidth,window.innerHeight);
@@ -57,10 +57,14 @@
                 document.getElementById('ry').innerHTML = "Y = " + ry;
             }*/
 
-            function deviceMoved() { //this func activates when the device is moved more than a threshold value
+            function deviceMoved() { //deviceMoved this func activates when the device is moved more than a threshold value
                 document.getElementById('moved').innerHTML = "Moved!";
                 scream.play();
                 console.log("sound played");
+            }
+
+            function mouseClicked() {
+                scream = loadSound('sadTrombone.mp3');
             }
         </script>
     </body>
