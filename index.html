@@ -11,7 +11,6 @@
         font-family: 'Source Sans Pro', sans-serif;
         background-image: url('backgroundMinimal.png');
         background-size: cover;
-        /*background-color: black;*/
         color: white;
       }
       #name {
@@ -42,65 +41,22 @@
       <h2>How To Play:</h2>
       <div id="instructDiv">
         <p>- You are the soft shelled astronaut.</p>
-        <p>- Hit spacebar to float up.</p>
-        <p>- "a" to move left. "d" to move right.</p>
+        <p>- Tap to float up.</p>
         <p>- Avoid the asteroids.</p>
         <p>- Gain points when asteroids go offscreen.</p>
-        <p>- "r" to restart.</p>
         <p>- Have fun!</p>
       </div>
       <br>
       <br>
+      
+      <h2 onclick="toGame()">Tap HERE to start.</h2>
 
-      <!--<h2>Choose a Difficulty:</h2>
-      <div>
-        <button id="easyButton" onclick="colorMe('#42f442','white','white'), mode(-1.2,250,500)">Easy</button>
-        <button id="mediumButton" onclick="colorMe('white','#42f442','white'), mode(-1.7,130,300)">Medium</button>
-        <button id="hardButton" onclick="colorMe('white','white','#42f442'), mode(-2.5,100,250)">Hard</button>
-      </div>
-      <br>-->
-      
-      <h2 onclick="toMobileGame()">Hit ENTER to start.</h2>
-      
-      <h3 id="warning"></h3>
+      <br>
       <br>
       
       <script>
-        /*function colorMe(easy,medium,hard) { //button colors to indicate selected mode
-          document.getElementById('easyButton').style.borderColor = easy;
-          document.getElementById('mediumButton').style.borderColor = medium;
-          document.getElementById('hardButton').style.borderColor = hard;
-        }
-        
-        var chosen = false;
-        var clicked = 0;
-        
-        function mode(speed,minTime,maxTime) { //save difficulty to LS
-          localStorage.setItem("mode",speed);
-          localStorage.setItem("min",minTime);
-          localStorage.setItem("max",maxTime);
-          chosen = true;
-        }
-        
-        document.onkeypress = function(event) {
-          if ((event.keyCode == 13) && (chosen === true)) { //if player hit enter and picked a mode
-            location.href="sidescroller.html";
-          }
-          else if ((event.keyCode == 13) && (chosen === false)) { //if player hit enter and didn't pick a mode
-            document.getElementById('warning').innerHTML = "Choose a difficulty please!";
-          }
-        }*/
-
-        document.onkeypress = function(event) { //runs every time a key is pressed
-          if (event.keyCode == 13) { //if player key is enter...
-            location.href="sidescroller.html"; //go to game
-          }
-        }
-
-        //localStorage.setItem("highestScore",0); //set default high score
-        
-        function toMobileGame() { //go to mobile game
-          location.href="mobileGravityGame.html";
+        function toGame() { //go to game
+          location.href="sidescroller.html";
         }
       </script>
   </body>
